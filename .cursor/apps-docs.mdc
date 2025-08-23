@@ -1,0 +1,540 @@
+---
+alwaysApply: false
+---
+
+# apps/docs - Cursor Rules
+
+## App Overview
+This is the documentation site for DocPal Node Client, built with Nuxt 4, Nuxt Content, and Nuxt UI.
+
+## Technology Stack
+- **Framework**: Nuxt 4.x with Vue 3
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Library**: Nuxt UI
+- **Content**: Nuxt Content (markdown)
+- **Package Manager**: pnpm
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript configuration
+- Prefer `interface` over `type` for object shapes
+- Use explicit return types for public functions
+- Enable all strict mode options in tsconfig.json
+
+### Vue/Nuxt
+- Use `<script setup lang="ts">` syntax for Vue components
+- Prefer Composition API over Options API
+- Use Nuxt auto-imports (don't manually import Vue composables)
+- Use `definePageMeta()` for page metadata
+- Use `defineProps()` and `defineEmits()` for component props/events
+
+### File Naming
+- **Use PascalCase for file names**: `MyComponent.vue`
+- Use PascalCase for component names in templates
+- Use camelCase for variables and functions
+- Use UPPER_SNAKE_CASE for constants
+
+### Nuxt File Path Naming
+- Nuxt uses file path naming convention
+- Example structure:
+  ```
+  invoice/
+  ├── Header/
+  │   └── index.vue
+  ```
+  Becomes: `InvoiceHeader` component
+- Use descriptive folder names that translate to component names
+
+### Component Structure
+```vue
+<template>
+  <!-- Template content -->
+</template>
+
+<script setup lang="ts">
+// Imports
+// Props/Emits definitions
+// Composables
+// Computed/Reactive data
+// Methods
+// Lifecycle hooks
+</script>
+
+<style scoped>
+/* Component styles using Tailwind classes */
+</style>
+```
+
+### Styling (Tailwind CSS)
+- **Use Tailwind CSS** for styling
+- Use Tailwind utility classes
+- Follow mobile-first responsive design
+- Use CSS custom properties for theme variables
+- Prefer flexbox and grid for layouts
+- Ensure accessibility and color contrast
+- Use Tailwind's dark mode support
+
+### UI Library (Nuxt UI)
+- **Use Nuxt UI** as the UI library
+- Follow Nuxt UI component patterns
+- Use Nuxt UI theming and customization
+- Leverage Nuxt UI form components
+- Use Nuxt UI layout components
+- Follow Nuxt UI design guidelines
+
+### Content Management
+- **Use Nuxt Content** for markdown files
+- Store content in `apps/docs/content/` directory
+- **Versioned Documentation Structure**:
+  - `content/index.md` - Main documentation index (not versioned)
+  - `content/{version}/` - Versioned documentation folders
+  - Example: `content/6.0.0/authentication.md`
+- Use front matter for metadata including `version` field
+- Implement proper content routing with version paths
+- **All documentation (except index) must be versioned** based on `apps/web/package.json` version
+- Keep content versioned with web app
+- **NO API integration** - this is a static documentation site
+
+### Version Synchronization
+- **All content must follow the version number from `apps/web/package.json`**
+- **Documentation Structure**:
+  - When web app version is `6.0.0`, create `content/6.0.0/` folder
+  - All documentation files go in versioned folders: `content/6.0.0/authentication.md`
+  - Only `content/index.md` remains in root (not versioned)
+- Update documentation version when web app version changes
+- Keep documentation in sync with web app features
+- Ensure examples match current web app implementation
+- **Version Management**:
+  - Check `apps/web/package.json` version before creating new docs
+  - Create new version folder when web app version changes
+  - Update all internal links to use versioned paths
+
+### State Management
+- Use Nuxt composables for local state
+- Use `useState()` for reactive state
+- Use `useCookie()` for persistent state
+- Avoid Pinia unless absolutely necessary
+
+### Content Rendering
+- Use `<ContentDoc>` component for markdown rendering
+- Use `<ContentList>` for content listing
+- Implement proper content navigation
+- Use content querying for dynamic content
+
+### Common Patterns
+
+#### Content Rendering
+```vue
+<template>
+  <div class="max-w-4xl">
+    <ContentDoc path="/6.0.0/getting-started" />
+  </div>
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+  title: 'Getting Started'
+})
+</script>
+```
+
+#### Content Listing
+```vue
+<template>
+  <ContentList path="/" v-slot="{ list }">
+    <div v-for="doc in list" :key="doc._path">
+      <h2>{{ doc.title }}</h2>
+      <p>{{ doc.description }}</p>
+    </div>
+  </ContentList>
+</template>
+```
+
+#### Reactive State
+```typescript
+const count = useState('count', () => 0)
+const user = useState<User | null>('user', () => null)
+```
+
+#### Component Props
+```typescript
+interface Props {
+  title: string
+  description?: string
+  items: string[]
+}
+
+const props = defineProps<Props>()
+```
+
+#### Event Handling
+```typescript
+const emit = defineEmits<{
+  update: [value: string]
+  delete: [id: string]
+}>()
+```
+
+### Performance
+- Use lazy loading for components when appropriate
+- Implement proper image optimization
+- Use code splitting for large applications
+- Minimize bundle size with tree shaking
+- Use `v-memo` for expensive computations
+- Optimize content loading and rendering
+
+### Error Handling
+- Use try-catch for async operations
+- Implement proper error boundaries
+- Show user-friendly error messages using Nuxt UI
+- Log errors for debugging
+- Handle content loading failures gracefully
+
+### Security
+- Validate all user inputs
+- Sanitize data before rendering
+- Use HTTPS in production
+- Implement proper content sanitization
+- Follow OWASP guidelines
+
+### Accessibility
+- Use semantic HTML elements
+- Provide alt text for images
+- Ensure keyboard navigation
+- Test with screen readers
+- Use proper ARIA labels
+- Maintain color contrast ratios
+
+### Testing
+- Write unit tests for utilities and composables
+- Use Vitest for testing framework
+- Test components with Vue Test Utils
+- Mock external dependencies
+- Test content rendering
+
+### Environment Configuration
+- Use `.env` files for environment variables
+- Never commit sensitive data
+- Use runtime config for public variables
+- Validate environment variables on startup
+
+### Documentation
+- Write JSDoc comments for public APIs
+- Document complex business logic
+- Keep README files updated
+- Use TypeScript for self-documenting code
+- **CRITICAL**: Keep documentation in sync with web app
+
+### Git Workflow
+- Use conventional commits format
+- Create feature branches from main
+- Use descriptive commit messages
+- Keep commits atomic and focused
+
+### Browser Support
+- Support modern browsers (last 2 versions)
+- Use progressive enhancement
+- Test on mobile devices
+- Ensure cross-browser compatibility
+
+### Deployment
+- Use static generation for documentation
+- Implement proper build optimization
+- Use CDN for static assets
+- Monitor performance metrics
+
+### Code Review Guidelines
+- Check for TypeScript errors
+- Verify responsive design
+- Test accessibility features
+- Review security implications
+- Ensure proper error handling
+- Check for performance issues
+- **Verify content is current and accurate**
+- Ensure examples work correctly
+- Check that documentation matches web app
+
+### Dependencies
+- Keep dependencies up to date
+- Use exact versions for critical packages
+- Audit dependencies regularly
+- Prefer official packages over community ones
+
+### Content Guidelines
+- Write clear, concise documentation
+- Use proper markdown formatting
+- Include code examples
+- Add screenshots when helpful
+- Keep content organized and navigable
+- Use consistent terminology
+- Update content when web app changes
+- **Version Management**:
+  - Always check `apps/web/package.json` version before creating docs
+  - Create new version folder when web app version changes
+  - Update all internal links to use versioned paths
+  - Include `version` field in front matter
+  - Keep documentation structure consistent across versions
+
+### Monitoring and Analytics
+- Implement error tracking
+- Monitor performance metrics
+- Track user interactions
+- Use analytics responsibly
+- Respect user privacy
+
+# apps/docs - Cursor Rules
+
+## App Overview
+This is the documentation site for DocPal Node Client, built with Nuxt 4, Nuxt Content, and Nuxt UI.
+
+## Technology Stack
+- **Framework**: Nuxt 4.x with Vue 3
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Library**: Nuxt UI
+- **Content**: Nuxt Content (markdown)
+- **Package Manager**: pnpm
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript configuration
+- Prefer `interface` over `type` for object shapes
+- Use explicit return types for public functions
+- Enable all strict mode options in tsconfig.json
+
+### Vue/Nuxt
+- Use `<script setup lang="ts">` syntax for Vue components
+- Prefer Composition API over Options API
+- Use Nuxt auto-imports (don't manually import Vue composables)
+- Use `definePageMeta()` for page metadata
+- Use `defineProps()` and `defineEmits()` for component props/events
+
+### File Naming
+- **Use PascalCase for file names**: `MyComponent.vue`
+- Use PascalCase for component names in templates
+- Use camelCase for variables and functions
+- Use UPPER_SNAKE_CASE for constants
+
+### Nuxt File Path Naming
+- Nuxt uses file path naming convention
+- Example structure:
+  ```
+  invoice/
+  ├── Header/
+  │   └── index.vue
+  ```
+  Becomes: `InvoiceHeader` component
+- Use descriptive folder names that translate to component names
+
+### Component Structure
+```vue
+<template>
+  <!-- Template content -->
+</template>
+
+<script setup lang="ts">
+// Imports
+// Props/Emits definitions
+// Composables
+// Computed/Reactive data
+// Methods
+// Lifecycle hooks
+</script>
+
+<style scoped>
+/* Component styles using Tailwind classes */
+</style>
+```
+
+### Styling (Tailwind CSS)
+- **Use Tailwind CSS** for styling
+- Use Tailwind utility classes
+- Follow mobile-first responsive design
+- Use CSS custom properties for theme variables
+- Prefer flexbox and grid for layouts
+- Ensure accessibility and color contrast
+- Use Tailwind's dark mode support
+
+### UI Library (Nuxt UI)
+- **Use Nuxt UI** as the UI library
+- Follow Nuxt UI component patterns
+- Use Nuxt UI theming and customization
+- Leverage Nuxt UI form components
+- Use Nuxt UI layout components
+- Follow Nuxt UI design guidelines
+
+### Content Management
+- **Use Nuxt Content** for markdown files
+- Store content in `apps/docs/content/` directory
+- Use front matter for metadata
+- Implement proper content routing
+- Keep content versioned with web app
+- **NO API integration** - this is a static documentation site
+
+### Version Synchronization
+- **All content must follow the version number from `apps/web/package.json`**
+- Update documentation version when web app version changes
+- Keep documentation in sync with web app features
+- Ensure examples match current web app implementation
+
+### State Management
+- Use Nuxt composables for local state
+- Use `useState()` for reactive state
+- Use `useCookie()` for persistent state
+- Avoid Pinia unless absolutely necessary
+
+### Content Rendering
+- Use `<ContentDoc>` component for markdown rendering
+- Use `<ContentList>` for content listing
+- Implement proper content navigation
+- Use content querying for dynamic content
+
+### Common Patterns
+
+#### Content Rendering
+```vue
+<template>
+  <div class="max-w-4xl">
+    <ContentDoc path="/getting-started" />
+  </div>
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+  title: 'Getting Started'
+})
+</script>
+```
+
+#### Content Listing
+```vue
+<template>
+  <ContentList path="/" v-slot="{ list }">
+    <div v-for="doc in list" :key="doc._path">
+      <h2>{{ doc.title }}</h2>
+      <p>{{ doc.description }}</p>
+    </div>
+  </ContentList>
+</template>
+```
+
+#### Reactive State
+```typescript
+const count = useState('count', () => 0)
+const user = useState<User | null>('user', () => null)
+```
+
+#### Component Props
+```typescript
+interface Props {
+  title: string
+  description?: string
+  items: string[]
+}
+
+const props = defineProps<Props>()
+```
+
+#### Event Handling
+```typescript
+const emit = defineEmits<{
+  update: [value: string]
+  delete: [id: string]
+}>()
+```
+
+### Performance
+- Use lazy loading for components when appropriate
+- Implement proper image optimization
+- Use code splitting for large applications
+- Minimize bundle size with tree shaking
+- Use `v-memo` for expensive computations
+- Optimize content loading and rendering
+
+### Error Handling
+- Use try-catch for async operations
+- Implement proper error boundaries
+- Show user-friendly error messages using Nuxt UI
+- Log errors for debugging
+- Handle content loading failures gracefully
+
+### Security
+- Validate all user inputs
+- Sanitize data before rendering
+- Use HTTPS in production
+- Implement proper content sanitization
+- Follow OWASP guidelines
+
+### Accessibility
+- Use semantic HTML elements
+- Provide alt text for images
+- Ensure keyboard navigation
+- Test with screen readers
+- Use proper ARIA labels
+- Maintain color contrast ratios
+
+### Testing
+- Write unit tests for utilities and composables
+- Use Vitest for testing framework
+- Test components with Vue Test Utils
+- Mock external dependencies
+- Test content rendering
+
+### Environment Configuration
+- Use `.env` files for environment variables
+- Never commit sensitive data
+- Use runtime config for public variables
+- Validate environment variables on startup
+
+### Documentation
+- Write JSDoc comments for public APIs
+- Document complex business logic
+- Keep README files updated
+- Use TypeScript for self-documenting code
+- **CRITICAL**: Keep documentation in sync with web app
+
+### Git Workflow
+- Use conventional commits format
+- Create feature branches from main
+- Use descriptive commit messages
+- Keep commits atomic and focused
+
+### Browser Support
+- Support modern browsers (last 2 versions)
+- Use progressive enhancement
+- Test on mobile devices
+- Ensure cross-browser compatibility
+
+### Deployment
+- Use static generation for documentation
+- Implement proper build optimization
+- Use CDN for static assets
+- Monitor performance metrics
+
+### Code Review Guidelines
+- Check for TypeScript errors
+- Verify responsive design
+- Test accessibility features
+- Review security implications
+- Ensure proper error handling
+- Check for performance issues
+- **Verify content is current and accurate**
+- Ensure examples work correctly
+- Check that documentation matches web app
+
+### Dependencies
+- Keep dependencies up to date
+- Use exact versions for critical packages
+- Audit dependencies regularly
+- Prefer official packages over community ones
+
+### Monitoring and Analytics
+- Implement error tracking
+- Monitor performance metrics
+- Track user interactions
+- Use analytics responsibly
+- Respect user privacy
+

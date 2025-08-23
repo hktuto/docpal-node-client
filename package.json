@@ -1,0 +1,17 @@
+{
+  "name": "docpal-node-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "getApi": "pnpm -F api run generate ",
+    "dev": "pnpm -F web run dev",
+    "web:build": "pnpm -F web run build",
+    "web:generate": "pnpm -F web run generate",
+    "web:preview": "pnpm -F web run preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0"
+}

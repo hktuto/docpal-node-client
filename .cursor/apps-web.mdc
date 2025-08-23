@@ -1,0 +1,268 @@
+---
+alwaysApply: false
+---
+
+
+
+# apps/web - Cursor Rules
+
+## App Overview
+This is the main web application for DocPal Node Client, built with Nuxt 4, Vue 3, and Element Plus.
+
+## Technology Stack
+- **Framework**: Nuxt 4.x with Vue 3
+- **Language**: TypeScript
+- **Styling**: SCSS only (NO Tailwind CSS)
+- **UI Library**: Element Plus
+- **Package Manager**: pnpm
+- **Database**: Neon (PostgreSQL)
+
+## Coding Standards
+
+### TypeScript
+- Use strict TypeScript configuration
+- Prefer `interface` over `type` for object shapes
+- Use explicit return types for public functions
+- Enable all strict mode options in tsconfig.json
+
+### Vue/Nuxt
+- Use `<script setup lang="ts">` syntax for Vue components
+- Prefer Composition API over Options API
+- Use Nuxt auto-imports (don't manually import Vue composables)
+- Use `definePageMeta()` for page metadata
+- Use `defineProps()` and `defineEmits()` for component props/events
+
+### File Naming
+- **Use PascalCase for file names**: `MyComponent.vue`
+- Use PascalCase for component names in templates
+- Use camelCase for variables and functions
+- Use UPPER_SNAKE_CASE for constants
+
+### Nuxt File Path Naming
+- Nuxt uses file path naming convention
+- Example structure:
+  ```
+  invoice/
+  ├── Header/
+  │   └── index.vue
+  ```
+  Becomes: `InvoiceHeader` component
+- Use descriptive folder names that translate to component names
+
+### Component Structure
+```vue
+<template>
+  <!-- Template content -->
+</template>
+
+<script setup lang="ts">
+// Imports
+// Props/Emits definitions
+// Composables
+// Computed/Reactive data
+// Methods
+// Lifecycle hooks
+</script>
+
+<style lang="scss" scoped>
+/* Component styles using SCSS */
+</style>
+```
+
+### Styling (SCSS Only)
+- **DO NOT use Tailwind CSS** - use only SCSS for styling
+- Use SCSS modules or global SCSS files
+- Follow Element Plus design patterns and components
+- Use Element Plus theming system
+- Follow mobile-first responsive design
+- Use CSS custom properties for theme variables
+- Prefer flexbox and grid for layouts
+- Ensure accessibility and color contrast
+
+### UI Library (Element Plus)
+- **Use Element Plus** as the UI library
+- Follow Element Plus component patterns
+- Use Element Plus theming and customization
+- Leverage Element Plus form components
+- Use Element Plus layout components
+- Follow Element Plus design guidelines
+
+### State Management
+- Use Nuxt composables for local state
+- Use `useState()` for reactive state
+- Use `useCookie()` for persistent state
+- Avoid Pinia unless absolutely necessary
+
+### API Integration
+- Use the workspace API library in `libraries/api`
+- Follow RESTful conventions
+- Use proper error handling with try-catch
+- Implement loading states for async operations
+- Use `useFetch()` for API calls
+
+### Internationalization
+- Use `$t()` for translations
+- Store translation keys in locale files
+- Use `en-US` as default locale
+- Support `zh-CN` and `zh-HK` locales
+- Use Nuxt i18n module
+
+### Common Patterns
+
+#### API Calls
+```typescript
+const { data, pending, error } = await useFetch('/api/endpoint', {
+  method: 'POST',
+  body: payload,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+```
+
+#### Reactive State
+```typescript
+const count = useState('count', () => 0)
+const user = useState<User | null>('user', () => null)
+```
+
+#### Component Props
+```typescript
+interface Props {
+  title: string
+  description?: string
+  items: string[]
+}
+
+const props = defineProps<Props>()
+```
+
+#### Event Handling
+```typescript
+const emit = defineEmits<{
+  update: [value: string]
+  delete: [id: string]
+}>()
+```
+
+#### Form Handling with Element Plus
+```vue
+<template>
+  <el-form :model="form" :rules="rules" ref="formRef">
+    <el-form-item label="Email" prop="email">
+      <el-input v-model="form.email" />
+    </el-form-item>
+  </el-form>
+</template>
+
+<script setup lang="ts">
+const form = reactive({
+  email: '',
+  password: ''
+})
+
+const rules = {
+  email: [
+    { required: true, message: 'Email is required', trigger: 'blur' }
+  ]
+}
+</script>
+```
+
+### Performance
+- Use lazy loading for components when appropriate
+- Implement proper image optimization
+- Use code splitting for large applications
+- Minimize bundle size with tree shaking
+- Use `v-memo` for expensive computations
+- Implement virtual scrolling for large lists
+- Use `shallowRef` for large objects
+
+### Error Handling
+- Use try-catch for async operations
+- Implement proper error boundaries
+- Show user-friendly error messages using Element Plus
+- Log errors for debugging
+- Handle network failures gracefully
+
+### Security
+- Validate all user inputs
+- Sanitize data before rendering
+- Use HTTPS in production
+- Implement proper authentication/authorization
+- Follow OWASP guidelines
+- Use secure authentication methods
+
+### Accessibility
+- Use semantic HTML elements
+- Provide alt text for images
+- Ensure keyboard navigation
+- Test with screen readers
+- Use proper ARIA labels
+- Maintain color contrast ratios
+
+### Testing
+- Write unit tests for utilities and composables
+- Use Vitest for testing framework
+- Test components with Vue Test Utils
+- Mock external dependencies
+- Test Element Plus component integration
+
+### Environment Configuration
+- Use `.env` files for environment variables
+- Never commit sensitive data
+- Use runtime config for public variables
+- Validate environment variables on startup
+
+### Documentation
+- Write JSDoc comments for public APIs
+- Document complex business logic
+- Keep README files updated
+- Use TypeScript for self-documenting code
+- **CRITICAL**: After any update, check if `apps/docs` documentation needs updating
+
+### Git Workflow
+- Use conventional commits format
+- Create feature branches from main
+- Use descriptive commit messages
+- Keep commits atomic and focused
+
+### Browser Support
+- Support modern browsers (last 2 versions)
+- Use progressive enhancement
+- Test on mobile devices
+- Ensure cross-browser compatibility
+
+### Deployment
+- Use static generation when possible
+- Implement proper build optimization
+- Use CDN for static assets
+- Monitor performance metrics
+
+### Code Review Guidelines
+- Check for TypeScript errors
+- Verify responsive design
+- Test accessibility features
+- Review security implications
+- Ensure proper error handling
+- Check for performance issues
+- **Verify documentation is updated** when changes are made
+- Ensure API documentation matches implementation
+- Check that examples in docs are current and working
+
+### Dependencies
+- Keep dependencies up to date
+- Use exact versions for critical packages
+- Audit dependencies regularly
+- Prefer official packages over community ones
+
+### Monitoring and Analytics
+- Implement error tracking
+- Monitor performance metrics
+- Track user interactions
+- Use analytics responsibly
+- Respect user privacy
+description:
+globs:
+alwaysApply: false
+---

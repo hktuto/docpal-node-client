@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - libraries/*
+
+onlyBuiltDependencies:
+  - better-sqlite3
