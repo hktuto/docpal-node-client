@@ -105,21 +105,40 @@ pnpm -F docs preview
 docpal-node-client/
 ├── apps/
 │   ├── web/                    # Main web application
-│   │   ├── app/
-│   │   │   ├── middleware/     # Authentication middleware
-│   │   │   ├── composables/    # Auth composables
-│   │   │   ├── pages/          # Vue pages
-│   │   │   └── components/     # Vue components
-│   │   ├── assets/             # Static assets
-│   │   ├── public/             # Public files
-│   │   └── nuxt.config.ts      # Nuxt configuration
+│   │   ├── app/                # Core application files
+│   │   │   ├── middleware/     # Global middleware (auth.global.ts)
+│   │   │   ├── composables/    # Vue composables (auth, serverHealth, etc.)
+│   │   │   ├── components/     # Shared Vue components
+│   │   │   │   ├── app/        # App-specific components
+│   │   │   │   ├── svg/        # SVG icon components
+│   │   │   │   └── LoadingBg/  # Loading background components
+│   │   │   ├── pages/          # Vue pages (index, login, server-down)
+│   │   │   ├── plugins/        # Nuxt plugins (element-plus, i18n, etc.)
+│   │   │   ├── utils/          # Utility functions and types
+│   │   │   ├── assets/         # Stylesheets and assets
+│   │   │   │   └── styles/     # SCSS files
+│   │   │   ├── app.vue         # Root Vue component
+│   │   │   └── app.config.ts   # App configuration
+│   │   ├── layers/             # Nuxt layers for modular features
+│   │   │   ├── auth/           # Authentication layer
+│   │   │   ├── browse/         # Browse functionality layer
+│   │   │   ├── companyProfile/ # Company profile layer
+│   │   │   ├── companyUser/    # Company user management layer
+│   │   │   └── tabs/           # Tab system layer
+│   │   ├── i18n/               # Internationalization
+│   │   │   └── locales/        # Translation files (en-US, zh-CN, zh-HK)
+│   │   ├── public/             # Static public files
+│   │   │   └── icons/          # Icon assets organized by category
+│   │   ├── nuxt.config.ts      # Nuxt configuration
+│   │   └── package.json        # Web app dependencies
 │   └── docs/                   # Documentation site
 │       ├── content/            # Markdown content
-│       ├── pages/              # Vue pages
+│       │   └── 6.0.0/         # Versioned documentation
+│       ├── app/                # Doc site Vue files
 │       └── nuxt.config.ts      # Nuxt configuration
 ├── libraries/
-│   └── api/                    # API client library
-├── packages/                   # Shared packages
+│   ├── api/                    # API client generation library
+│   └── eventbus/               # Global event bus library
 ├── package.json                # Workspace configuration
 └── pnpm-workspace.yaml         # pnpm workspace config
 ```
@@ -181,6 +200,296 @@ export const useIsAuthenticated = () => {
   return useState('isAuthenticated', () => false)
 }
 ```
+
+## Development Guide
+
+### Architecture Overview
+
+DocPal Node Client uses a modern, layered architecture built on Nuxt 4 with TypeScript. The application is structured as follows:
+
+#### Core Application (`apps/web/app/`)
+The main application logic resides in the `app/` directory with clear separation of concerns:
+
+- **Middleware**: Global authentication and route protection
+- **Composables**: Reusable Vue composition functions for state management
+- **Components**: Shared Vue components organized by functionality
+- **Pages**: Application routes and views
+- **Plugins**: Nuxt plugins for third-party integrations
+- **Utils**: Utility functions and TypeScript types
+
+#### Layers Architecture (`apps/web/layers/`)
+The application uses Nuxt layers for modular feature development:
+
+- **auth**: Authentication-related components and functionality
+- **browse**: File/content browsing capabilities
+- **companyProfile**: Company profile management
+- **companyUser**: User management for companies
+- **tabs**: Tab system for navigation and workspace management
+
+Each layer is self-contained with its own:
+- Components
+- Pages
+- Composables
+- Configuration (`nuxt.config.ts`)
+- TypeScript configuration (`tsconfig.json`)
+
+### Development Workflow
+
+#### 1. Setting Up Your Development Environment
+
+```bash
+# Clone and setup
+git clone <repo-url>
+cd docpal-node-client
+pnpm install
+
+# Start development servers
+pnpm dev          # Web app on :3000
+pnpm docs:dev     # Docs on :3001
+```
+
+#### 2. Working with Layers
+
+When developing new features, consider using the layer architecture:
+
+**Creating a New Layer:**
+```bash
+# Create layer structure
+mkdir -p apps/web/layers/myFeature/{components,pages,composables}
+cd apps/web/layers/myFeature
+
+# Create layer configuration
+echo 'export default defineNuxtConfig({})' > nuxt.config.ts
+echo '{ "extends": "../../tsconfig.json" }' > tsconfig.json
+```
+
+**Layer Best Practices:**
+- Keep layers focused on a single feature or domain
+- Use clear naming conventions
+- Document layer dependencies
+- Test layers independently when possible
+
+#### 3. Component Development
+
+**Component Organization:**
+```
+app/components/
+├── app/           # App-specific components
+│   ├── menu/      # Menu system components
+│   ├── contextmenu/ # Context menu components
+│   └── tab/       # Tab-related components
+├── svg/           # SVG icon components
+└── LoadingBg/     # Loading and background components
+```
+
+**Component Guidelines:**
+- Use Vue 3 Composition API
+- Follow TypeScript strict mode
+- Use Element Plus components when available
+- Implement proper prop validation
+- Add JSDoc comments for complex components
+
+#### 4. Styling Guidelines
+
+**SCSS Structure:**
+```
+app/assets/styles/
+├── elements/      # Element Plus customizations
+├── flex.scss      # Flexbox utilities
+├── main.scss      # Main stylesheet entry
+└── var.scss       # CSS variables and mixins
+```
+
+**Styling Best Practices:**
+- Use SCSS for all styling (no Tailwind CSS)
+- Follow BEM methodology for class naming
+- Use CSS custom properties for theming
+- Leverage Element Plus design tokens
+- Keep component styles scoped
+
+#### 5. State Management
+
+**Composables Pattern:**
+The application uses Vue composables for state management:
+
+```typescript
+// Example composable structure
+export const useFeature = () => {
+  const state = reactive({
+    // state properties
+  })
+  
+  const actions = {
+    // action methods
+  }
+  
+  const getters = computed(() => {
+    // computed properties
+  })
+  
+  return {
+    ...toRefs(state),
+    ...actions,
+    ...getters
+  }
+}
+```
+
+**Key Composables:**
+- `useAuth()`: Authentication state and methods
+- `useServerHealth()`: Server connectivity monitoring
+- `useGlobalSetting()`: Application-wide settings
+- `useTab()`: Tab system management
+
+#### 6. Testing Strategy
+
+**Unit Testing:**
+```bash
+# Run tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Generate coverage report
+pnpm test:coverage
+```
+
+**Testing Guidelines:**
+- Write tests for all composables
+- Test component behavior, not implementation
+- Mock external dependencies
+- Use Vue Testing Utils for component testing
+- Aim for >80% code coverage
+
+#### 7. Internationalization
+
+**Adding New Translations:**
+```typescript
+// Add to i18n/locales/{locale}.json
+{
+  "feature": {
+    "title": "Feature Title",
+    "description": "Feature description"
+  }
+}
+```
+
+**Using in Components:**
+```vue
+<template>
+  <h1>{{ $t('feature.title') }}</h1>
+  <p>{{ $t('feature.description') }}</p>
+</template>
+```
+
+**Supported Locales:**
+- `en-US`: English (United States)
+- `zh-CN`: Chinese (Simplified)
+- `zh-HK`: Chinese (Traditional)
+
+#### 8. API Integration
+
+**Using the API Library:**
+```typescript
+// Generate API client
+pnpm run getApi
+
+// Use in components
+import { useApi } from '~/composables/api'
+
+const { data, pending, error } = await useApi().get('/endpoint')
+```
+
+#### 9. Performance Optimization
+
+**Best Practices:**
+- Use `defineAsyncComponent` for large components
+- Implement proper loading states
+- Use `v-memo` for expensive list renders
+- Optimize images and assets
+- Leverage Nuxt's built-in optimizations
+
+#### 10. Debugging and Development Tools
+
+**Recommended VS Code Extensions:**
+- Vue Language Features (Volar)
+- TypeScript Importer
+- SCSS IntelliSense
+- Element Plus Snippets
+
+**Browser DevTools:**
+- Vue DevTools for component inspection
+- Network tab for API debugging
+- Console for error tracking
+
+### Code Standards
+
+#### TypeScript Guidelines
+- Use strict mode TypeScript
+- Prefer interfaces over types for object shapes
+- Use type guards for runtime type checking
+- Document complex types with JSDoc
+- Avoid `any` type usage
+
+#### Vue Guidelines
+- Use `<script setup>` syntax
+- Prefer Composition API over Options API
+- Use `defineProps` and `defineEmits` with TypeScript
+- Implement proper component documentation
+- Follow Vue style guide conventions
+
+#### Git Workflow
+```bash
+# Feature development
+git checkout -b feature/new-feature
+# ... make changes ...
+git add .
+git commit -m "feat: add new feature"
+git push origin feature/new-feature
+# Create pull request
+```
+
+**Commit Message Convention:**
+- `feat:` New features
+- `fix:` Bug fixes
+- `docs:` Documentation changes
+- `style:` Code style changes
+- `refactor:` Code refactoring
+- `test:` Test additions/modifications
+- `chore:` Maintenance tasks
+
+### Troubleshooting
+
+#### Common Issues
+
+**Build Errors:**
+```bash
+# Clear cache and reinstall
+rm -rf node_modules .nuxt
+pnpm install
+pnpm dev
+```
+
+**Type Errors:**
+```bash
+# Regenerate TypeScript definitions
+pnpm run postinstall
+pnpm run dev
+```
+
+**Hot Reload Issues:**
+```bash
+# Restart development server
+pnpm dev
+```
+
+#### Getting Help
+
+1. Check the [Authentication](/authentication) guide for auth-related issues
+2. Review the [Event Bus](/event-bus) documentation for state management
+3. Check layer-specific documentation in each layer's README
+4. Contact the development team for complex issues
 
 ## Development Workflow
 

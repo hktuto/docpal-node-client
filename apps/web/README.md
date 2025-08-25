@@ -1,14 +1,18 @@
-# Nuxt v4 Web App
+# DocPal Node Client - Web Application
 
-A basic Nuxt v4 application with internationalization (i18n) and color mode support.
+A modern web application built with Nuxt 4, featuring a layered architecture, authentication system, and comprehensive internationalization support.
 
 ## Features
 
-- **Nuxt v4**: Latest version of Nuxt with Vue 3 and Vite
-- **Internationalization**: Built-in i18n support with English and French
-- **Color Mode**: Dark and light theme support with system preference detection
-- **Tailwind CSS**: Utility-first CSS framework for styling
-- **TypeScript**: Full TypeScript support
+- **Nuxt 4**: Latest version with Vue 3 Composition API
+- **TypeScript**: Full TypeScript support with strict mode
+- **Layered Architecture**: Modular features using Nuxt layers
+- **Authentication**: Global middleware-based authentication system
+- **Internationalization**: Multi-language support (en-US, zh-CN, zh-HK)
+- **Element Plus**: Modern Vue 3 UI component library
+- **SCSS Styling**: Advanced styling with SCSS and CSS custom properties
+- **Server Health Monitoring**: Built-in server connectivity monitoring
+- **Event Bus System**: Global event handling for application state
 
 ## Getting Started
 
@@ -30,26 +34,63 @@ A basic Nuxt v4 application with internationalization (i18n) and color mode supp
 - `pnpm build` - Build for production
 - `pnpm generate` - Generate static site
 - `pnpm preview` - Preview production build
+- `pnpm getApi` - Generate API client from OpenAPI specification
 
 ## Project Structure
 
 ```
 apps/web/
-├── assets/css/main.css    # Main CSS file with Tailwind imports
-├── locales/               # i18n translation files
-│   ├── en.json           # English translations
-│   └── fr.json           # French translations
-├── pages/                 # Vue pages
-│   └── index.vue         # Home page
-├── app.vue               # Main app component
-├── nuxt.config.ts        # Nuxt configuration
-├── tailwind.config.js    # Tailwind CSS configuration
-├── postcss.config.js     # PostCSS configuration
-└── package.json          # Dependencies and scripts
+├── app/                   # Core application
+│   ├── middleware/        # Global middleware (authentication)
+│   ├── composables/       # Vue composables (auth, serverHealth, etc.)
+│   ├── components/        # Shared Vue components
+│   │   ├── app/          # App-specific components (menu, contextmenu, tab)
+│   │   ├── svg/          # SVG icon components
+│   │   └── LoadingBg/    # Loading and background components
+│   ├── pages/            # Application pages (index, login, server-down)
+│   ├── plugins/          # Nuxt plugins (Element Plus, i18n, serverHealth)
+│   ├── utils/            # Utility functions and TypeScript types
+│   ├── assets/           # Stylesheets and assets
+│   │   └── styles/       # SCSS files and Element Plus customizations
+│   ├── app.vue          # Root Vue component
+│   └── app.config.ts    # Application configuration
+├── layers/               # Nuxt layers for modular features
+│   ├── auth/            # Authentication layer
+│   ├── browse/          # Browse functionality layer
+│   ├── companyProfile/  # Company profile management layer
+│   ├── companyUser/     # Company user management layer
+│   └── tabs/            # Tab system layer
+├── i18n/                # Internationalization
+│   ├── locales/         # Translation files (en-US, zh-CN, zh-HK)
+│   └── i18n.config.ts   # i18n configuration
+├── public/              # Static assets
+│   └── icons/          # Organized icon assets
+├── nuxt.config.ts       # Nuxt configuration
+└── package.json         # Dependencies and scripts
 ```
 
-## Configuration
+## Architecture
 
-- **i18n**: Configured with English and French locales, using prefix strategy
-- **Color Mode**: System preference detection with light/dark theme toggle
-- **Tailwind CSS**: Configured with dark mode support using class strategy
+### Layered Architecture
+The application uses Nuxt layers to organize features into modular, self-contained units. Each layer has its own:
+- Components
+- Pages
+- Composables
+- Configuration
+
+### Key Technologies
+- **Vue 3** with Composition API
+- **TypeScript** with strict type checking
+- **Element Plus** for UI components
+- **SCSS** for styling (no Tailwind CSS)
+- **Nuxt 4** for SSR/SPA capabilities
+
+### Authentication System
+Global authentication middleware (`auth.global.ts`) protects routes and manages user sessions.
+
+### Event System
+Built-in event bus system for global application state management and communication between components.
+
+## Development
+
+For detailed development guidelines, see the [Development Guide](../docs/content/getting-started.md#development-guide) in the documentation.

@@ -41,11 +41,13 @@ DocPal Node Client is a modern web application built with:
 ```
 apps/
 ├── web/          # Main web application
-│   ├── app/
-│   │   ├── middleware/    # Authentication middleware
-│   │   └── composables/   # Auth composables
-│   └── ...
+│   ├── app/      # Core application (middleware, composables, components, pages)
+│   ├── layers/   # Modular features (auth, browse, tabs, company management)
+│   ├── i18n/     # Internationalization (en-US, zh-CN, zh-HK)
+│   └── public/   # Static assets and icons
 └── docs/         # This documentation site
+    ├── content/  # Markdown documentation
+    └── app/      # Documentation site components
 ```
 
 ## Getting Help
@@ -53,9 +55,11 @@ apps/
 If you need assistance:
 
 1. Check the [Getting Started](/6.0.0/getting-started) guide
-2. Review the [Authentication](/6.0.0/authentication) documentation
-3. Explore [Examples](/6.0.0/examples) for common use cases
-4. Contact the development team
+2. Review the [Development Guide](/6.0.0/development-guide) for comprehensive development information
+3. Read the [Authentication](/6.0.0/authentication) documentation
+4. Explore the [Event Bus](/6.0.0/event-bus) system documentation
+5. Learn about [Server Health](/6.0.0/server-health) monitoring
+6. Contact the development team
 
 ---
 
