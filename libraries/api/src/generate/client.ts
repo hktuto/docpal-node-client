@@ -234,15 +234,13 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 {
                     success: true;
                     data: {
-                        user: {
-                            id: string;
-                            /** @format email */
-                            email: string;
-                            name: string;
-                            companyId: string;
-                            isCompanyAdmin: boolean;
-                            permissions?: string[];
-                        };
+                        id: string;
+                        /** @format email */
+                        email: string;
+                        name: string;
+                        companyId: string;
+                        isCompanyAdmin: boolean;
+                        permissions?: string[];
                     };
                 },
                 | {
@@ -388,21 +386,13 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 {
                     success: true;
                     data: {
-                        user: {
-                            id: string;
-                            /** @format email */
-                            email: string;
-                            name: string;
-                            companyId: string;
-                            isCompanyAdmin: boolean;
-                            permissions?: string[];
-                        };
-                        session: {
-                            id?: string;
-                            token?: string;
-                            /** @format date-time */
-                            expiresAt: string;
-                        };
+                        id: string;
+                        /** @format email */
+                        email: string;
+                        name: string;
+                        companyId: string;
+                        isCompanyAdmin: boolean;
+                        permissions?: string[];
                     };
                 },
                 | {
@@ -469,78 +459,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/auth/reset-password
          * @secure
          */
-        postAuthResetPassword: (
-            data: {
-                /**
-                 * Email address to send reset link
-                 * @format email
-                 */
-                email: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postAuthResetPassword: (params: RequestParams = {}) =>
+            this.request<void, any>({
                 path: `/auth/reset-password`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -552,80 +475,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/auth/reset-password/confirm
          * @secure
          */
-        postAuthResetPasswordConfirm: (
-            data: {
-                /** Password reset token */
-                token: string;
-                /**
-                 * New password (minimum 8 characters)
-                 * @minLength 8
-                 */
-                password: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postAuthResetPasswordConfirm: (params: RequestParams = {}) =>
+            this.request<void, any>({
                 path: `/auth/reset-password/confirm`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -637,75 +491,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/auth/verify-email
          * @secure
          */
-        postAuthVerifyEmail: (
-            data: {
-                /** Email verification token */
-                token: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postAuthVerifyEmail: (params: RequestParams = {}) =>
+            this.request<void, any>({
                 path: `/auth/verify-email`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -718,66 +508,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         postAuthVerifyEmailResend: (params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<void, any>({
                 path: `/auth/verify-email/resend`,
                 method: "POST",
                 secure: true,
-                format: "json",
                 ...params,
             }),
     };
@@ -896,17 +630,19 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                       };
                   }
                 | {
+                      /** @default false */
                       success?: false;
-                      error?: {
-                          code?: "INSUFFICIENT_PERMISSIONS";
-                          message?: string;
+                      error: {
+                          code: "FORBIDDEN" | null;
+                          message: string;
                       };
                   }
                 | {
+                      /** @default false */
                       success?: false;
-                      error?: {
-                          code?: "COMPANY_NOT_FOUND";
-                          message?: string;
+                      error: {
+                          code: "NOT_FOUND" | null;
+                          message: string;
                       };
                   }
                 | {
@@ -962,8 +698,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                         createdAt: string;
                         /** @format date-time */
                         updatedAt: string;
-                        /** Bitwise permissions for frontend UI optimization */
-                        userPermissions: number;
                     };
                     meta?: {
                         /** @format date-time */
@@ -997,17 +731,19 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                       };
                   }
                 | {
+                      /** @default false */
                       success?: false;
-                      error?: {
-                          code?: "INSUFFICIENT_PERMISSIONS";
-                          message?: string;
+                      error: {
+                          code: "FORBIDDEN" | null;
+                          message: string;
                       };
                   }
                 | {
+                      /** @default false */
                       success?: false;
-                      error?: {
-                          code?: "COMPANY_NOT_FOUND";
-                          message?: string;
+                      error: {
+                          code: "NOT_FOUND" | null;
+                          message: string;
                       };
                   }
                 | {
@@ -1093,17 +829,19 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                       };
                   }
                 | {
+                      /** @default false */
                       success?: false;
-                      error?: {
-                          code?: "INSUFFICIENT_PERMISSIONS";
-                          message?: string;
+                      error: {
+                          code: "FORBIDDEN" | null;
+                          message: string;
                       };
                   }
                 | {
+                      /** @default false */
                       success?: false;
-                      error?: {
-                          code?: "COMPANY_NOT_FOUND";
-                          message?: string;
+                      error: {
+                          code: "NOT_FOUND" | null;
+                          message: string;
                       };
                   }
                 | {
@@ -1220,7 +958,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 {
                     success?: boolean;
                     data?: {
-                        user?: {
+                        userId?: {
                             id?: string;
                             email?: string;
                             name?: string;
@@ -1439,72 +1177,61 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 {
                     success: true;
                     data: {
-                        users: {
-                            /** @format uuid */
-                            id: string;
-                            /** @format uuid */
-                            companyId: string;
-                            /** @format email */
-                            email: string;
-                            emailVerified: boolean;
-                            name: string;
-                            /** @format uri */
-                            image?: null | string;
-                            /** @format uuid */
-                            roleId?: null | string;
-                            isActive: boolean;
-                            isCompanyAdmin: boolean;
-                            isEmailVerified: boolean;
-                            /** @format uuid */
-                            invitedBy?: null | string;
-                            /** @format date-time */
-                            invitedAt?: null | string;
-                            /** @format date-time */
-                            acceptedAt?: null | string;
-                            twoFactorEnabled: boolean;
-                            /** @format date-time */
-                            lastLoginAt?: null | string;
-                            lastLoginIp?: null | string;
-                            /** @min 0 */
-                            failedLoginAttempts: number;
-                            /** @format date-time */
-                            lockedUntil?: null | string;
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                            role?: {
-                                /** @format uuid */
-                                id?: string;
-                                name?: string;
-                                description?: null | string;
-                                slug?: string;
-                                level?: number;
-                                isSystemRole?: boolean;
-                                isActive?: boolean;
-                                color?: null | string;
-                            };
-                            groups?: {
-                                /** @format uuid */
-                                id?: string;
-                                name?: string;
-                                description?: null | string;
-                                slug?: string;
-                                isActive?: boolean;
-                                /** @min 0 */
-                                memberCount?: number;
-                                status?: "active" | "pending" | "suspended";
-                            }[];
-                        }[];
+                        /** @format uuid */
+                        id: string;
+                        /** @format uuid */
+                        companyId: string;
+                        /** @format email */
+                        email: string;
+                        emailVerified: boolean;
+                        name: string;
+                        /** @format uri */
+                        image?: null | string;
+                        /** @format uuid */
+                        roleId?: null | string;
+                        isActive: boolean;
+                        isCompanyAdmin: boolean;
+                        isEmailVerified: boolean;
+                        /** @format uuid */
+                        invitedBy?: null | string;
+                        /** @format date-time */
+                        invitedAt?: null | string;
+                        /** @format date-time */
+                        acceptedAt?: null | string;
+                        twoFactorEnabled: boolean;
+                        /** @format date-time */
+                        lastLoginAt?: null | string;
+                        lastLoginIp?: null | string;
                         /** @min 0 */
-                        total: number;
-                        /** @min 1 */
-                        page: number;
-                        /** @min 1 */
-                        limit: number;
-                        /** @min 1 */
-                        totalPages: number;
-                        hasMore: boolean;
+                        failedLoginAttempts: number;
+                        /** @format date-time */
+                        lockedUntil?: null | string;
+                        /** @format date-time */
+                        createdAt: string;
+                        /** @format date-time */
+                        updatedAt: string;
+                        role?: {
+                            /** @format uuid */
+                            id?: string;
+                            name?: string;
+                            description?: null | string;
+                            slug?: string;
+                            level?: number;
+                            isSystemRole?: boolean;
+                            isActive?: boolean;
+                            color?: null | string;
+                        };
+                        groups?: {
+                            /** @format uuid */
+                            id?: string;
+                            name?: string;
+                            description?: null | string;
+                            slug?: string;
+                            isActive?: boolean;
+                            /** @min 0 */
+                            memberCount?: number;
+                            status?: "active" | "pending" | "suspended";
+                        }[];
                     };
                     meta?: {
                         /** @format date-time */
@@ -1870,7 +1597,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request GET:/users/{id}
          * @secure
          */
-        getUsersId: (id: string, params: RequestParams = {}) =>
+        getUsersId: (id: string | null, params: RequestParams = {}) =>
             this.request<
                 {
                     success: true;
@@ -2002,7 +1729,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         putUsersId: (
-            id: string,
+            id: string | null,
             data: {
                 /**
                  * @minLength 1
@@ -2014,18 +1741,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                  * @maxLength 255
                  */
                 email?: string;
-                /**
-                 * @minLength 8
-                 * @maxLength 128
-                 */
-                password?: string;
-                /** @format uuid */
-                roleId?: string | null;
-                isCompanyAdmin?: boolean;
-                isActive?: boolean;
-                /** @format uri */
-                image?: string | null;
-                twoFactorEnabled?: boolean;
             },
             params: RequestParams = {},
         ) =>
@@ -2161,7 +1876,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request DELETE:/users/{id}
          * @secure
          */
-        deleteUsersId: (id: string, params: RequestParams = {}) =>
+        deleteUsersId: (id: string | null, params: RequestParams = {}) =>
             this.request<
                 {
                     success: true;
@@ -2238,30 +1953,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request GET:/users/{id}/groups
          * @secure
          */
-        getUsersIdGroups: (id: string, params: RequestParams = {}) =>
+        getUsersIdGroups: (id: string | null, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        groups: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            description?: null | string;
-                            slug: string;
-                            isActive: boolean;
-                            /** @min 0 */
-                            memberCount: number;
-                            status: "active" | "pending" | "suspended";
-                        }[];
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -2313,7 +2007,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/users/${id}/groups`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -2326,7 +2019,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         postUsersIdGroups: (
-            id: string,
+            id: string | null,
             data: {
                 /**
                  * @minItems 1
@@ -2415,7 +2108,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         deleteUsersIdGroups: (
-            id: string,
+            id: string | null,
             data: {
                 /**
                  * @minItems 1
@@ -2503,30 +2196,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request GET:/users/{id}/role
          * @secure
          */
-        getUsersIdRole: (id: string, params: RequestParams = {}) =>
+        getUsersIdRole: (id: string | null, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        role: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            description?: null | string;
-                            slug?: string;
-                            level?: number;
-                            isSystemRole?: boolean;
-                            isActive?: boolean;
-                            color?: null | string;
-                        };
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -2578,7 +2250,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/users/${id}/role`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -2591,7 +2262,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         postUsersIdRole: (
-            id: string,
+            id: string | null,
             data: {
                 /** @format uuid */
                 roleId: string | null;
@@ -2676,20 +2347,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request DELETE:/users/{id}/role
          * @secure
          */
-        deleteUsersIdRole: (id: string, params: RequestParams = {}) =>
+        deleteUsersIdRole: (id: string | null, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -2741,7 +2401,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/users/${id}/role`,
                 method: "DELETE",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -2830,7 +2489,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/users/{id}/reactivate
          * @secure
          */
-        postUsersIdReactivate: (id: string, params: RequestParams = {}) =>
+        postUsersIdReactivate: (id: string | null, params: RequestParams = {}) =>
             this.request<
                 {
                     success: true;
@@ -3003,20 +2662,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request DELETE:/users/{id}/groups/{groupId}
          * @secure
          */
-        deleteUsersIdGroupsGroupid: (id: string, groupId: string, params: RequestParams = {}) =>
+        deleteUsersIdGroupsGroupid: (id: string | null, groupId: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -3068,7 +2716,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/users/${id}/groups/${groupId}`,
                 method: "DELETE",
                 secure: true,
-                format: "json",
                 ...params,
             }),
     };
@@ -3123,106 +2770,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        documents: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            hasFile: boolean;
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        }[];
-                        pagination: {
-                            page: number;
-                            limit: number;
-                            total: number;
-                            totalPages: number;
-                            hasNext: boolean;
-                            hasPrev: boolean;
-                        };
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents`,
                 method: "GET",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -3234,165 +2786,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents
          * @secure
          */
-        postDocuments: (
-            data: {
-                /**
-                 * Document title
-                 * @minLength 1
-                 * @maxLength 500
-                 */
-                title: string;
-                /**
-                 * Document description
-                 * @maxLength 2000
-                 */
-                description?: string;
-                /** Document content (optional) */
-                content?: string | null;
-                /**
-                 * Document type ID
-                 * @format uuid
-                 */
-                documentTypeId?: string;
-                /**
-                 * Parent folder ID (optional, null for root level)
-                 * @format uuid
-                 */
-                parentId?: string | null;
-                /** Document tags */
-                tags?: string[];
-                /** Document metadata based on document type schema */
-                metadata?: object;
-                /**
-                 * Document status
-                 * @default "draft"
-                 */
-                status?: "draft" | "published" | "archived";
-                /** Document settings */
-                settings?: {
-                    isPublic?: boolean;
-                    allowComments?: boolean;
-                    allowDownload?: boolean;
-                    allowPrint?: boolean;
-                    watermark?: string;
-                    /** @format date-time */
-                    expiresAt?: string;
-                    requireSignature?: boolean;
-                    trackViews?: boolean;
-                };
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        document: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            content?: string | null;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            /** Filtered metadata based on user permissions */
-                            metadata: object;
-                            tags: string[];
-                            fileInfo?: {
-                                originalName?: string;
-                                mimeType?: string;
-                                size?: number;
-                                storageKey?: string;
-                                checksum?: string;
-                            } | null;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            /** @format uuid */
-                            companyId: string;
-                            /** User permissions for this document */
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                                canShare?: boolean;
-                                canManagePermissions?: boolean;
-                            };
-                            /** Bitwise permissions for frontend UI optimization */
-                            userPermissions: number;
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        };
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocuments: (params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -3405,114 +2803,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         getDocumentsDocumentid: (documentId: string, params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        document: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            content?: string | null;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            /** Filtered metadata based on user permissions */
-                            metadata: object;
-                            tags: string[];
-                            fileInfo?: {
-                                originalName?: string;
-                                mimeType?: string;
-                                size?: number;
-                                storageKey?: string;
-                                checksum?: string;
-                            } | null;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            /** @format uuid */
-                            companyId: string;
-                            /** User permissions for this document */
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                                canShare?: boolean;
-                                canManagePermissions?: boolean;
-                            };
-                            /** Bitwise permissions for frontend UI optimization */
-                            userPermissions: number;
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        };
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -3526,166 +2820,17 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         putDocumentsDocumentid: (
             documentId: string,
-            data: {
-                /**
-                 * Document title
-                 * @minLength 1
-                 * @maxLength 500
-                 */
-                title?: string;
-                /**
-                 * Document description
-                 * @maxLength 2000
-                 */
-                description?: string;
-                /** Document content */
-                content?: string;
-                /**
-                 * Document type ID
-                 * @format uuid
-                 */
-                documentTypeId?: string;
-                /**
-                 * Parent folder ID (null for root level)
-                 * @format uuid
-                 */
-                parentId?: string | null;
-                /** Document tags */
-                tags?: string[];
-                /** Document metadata based on document type schema */
-                metadata?: object;
-                /** Document status */
-                status?: "draft" | "published" | "archived";
-                /** Document settings */
-                settings?: {
-                    isPublic?: boolean;
-                    allowComments?: boolean;
-                    allowDownload?: boolean;
-                    allowPrint?: boolean;
-                    watermark?: string;
-                    /** @format date-time */
-                    expiresAt?: string;
-                    requireSignature?: boolean;
-                    trackViews?: boolean;
-                };
-            },
             query?: {
                 /** @default false */
                 createVersion?: boolean;
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        document: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            content?: string | null;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            /** Filtered metadata based on user permissions */
-                            metadata: object;
-                            tags: string[];
-                            fileInfo?: {
-                                originalName?: string;
-                                mimeType?: string;
-                                size?: number;
-                                storageKey?: string;
-                                checksum?: string;
-                            } | null;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            /** @format uuid */
-                            companyId: string;
-                            /** User permissions for this document */
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                                canShare?: boolean;
-                                canManagePermissions?: boolean;
-                            };
-                            /** Bitwise permissions for frontend UI optimization */
-                            userPermissions: number;
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        };
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}`,
                 method: "PUT",
                 query: query,
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -3705,65 +2850,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    message: string;
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}`,
                 method: "DELETE",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -3775,122 +2866,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents/{documentId}/lock
          * @secure
          */
-        postDocumentsDocumentidLock: (
-            documentId: string,
-            data: {
-                /** Whether to lock or unlock the document */
-                lock: boolean;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        title: string;
-                        content?: string | null;
-                        status: "draft" | "published" | "archived";
-                        currentVersion: number;
-                        /** Filtered metadata based on user permissions */
-                        metadata: object;
-                        tags: string[];
-                        fileInfo?: {
-                            originalName?: string;
-                            mimeType?: string;
-                            size?: number;
-                            storageKey?: string;
-                            checksum?: string;
-                        } | null;
-                        documentType: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            description?: string | null;
-                        };
-                        createdBy: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            /** @format email */
-                            email: string;
-                        };
-                        /** @format uuid */
-                        parentId?: string | null;
-                        /** @format uuid */
-                        companyId: string;
-                        /** User permissions for this document */
-                        permissions: {
-                            canView?: boolean;
-                            canEdit?: boolean;
-                            canDelete?: boolean;
-                            canShare?: boolean;
-                            canManagePermissions?: boolean;
-                        };
-                        /** Bitwise permissions for frontend UI optimization */
-                        userPermissions: number;
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocumentsDocumentidLock: (documentId: string, params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents/${documentId}/lock`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -3903,101 +2883,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         getDocumentsDocumentidVersions: (documentId: string, params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        versions: {
-                            /** @format uuid */
-                            id: string;
-                            /** @format uuid */
-                            documentId: string;
-                            versionNumber: number;
-                            content?: string | null;
-                            metadata?: object | null;
-                            fileInfo?: {
-                                originalName?: string;
-                                mimeType?: string;
-                                size?: number;
-                                storageKey?: string;
-                                checksum?: string;
-                            } | null;
-                            changeReason?: string | null;
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        }[];
-                        pagination: {
-                            page: number;
-                            limit: number;
-                            total: number;
-                            totalPages: number;
-                            hasNext: boolean;
-                            hasPrev: boolean;
-                        };
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}/versions`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4010,99 +2899,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         getDocumentsDocumentidChildren: (documentId: string, params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        children: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            hasFile: boolean;
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        }[];
-                        parentPath: string;
-                        count: number;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}/children`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4123,92 +2923,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        documentId: string;
-                        versionNumber: number;
-                        content?: string | null;
-                        metadata?: object | null;
-                        fileInfo?: {
-                            originalName?: string;
-                            mimeType?: string;
-                            size?: number;
-                            storageKey?: string;
-                            checksum?: string;
-                        } | null;
-                        changeReason?: string | null;
-                        createdBy: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            /** @format email */
-                            email: string;
-                        };
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}/versions/${version}`,
                 method: "GET",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4221,66 +2940,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         deleteDocumentsDocumentidVersionsVersion: (documentId: string, version: string, params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}/versions/${version}`,
                 method: "DELETE",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4295,102 +2958,12 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         postDocumentsDocumentidVersionsVersionRestore: (
             documentId: string,
             version: string,
-            data: {
-                /**
-                 * Reason for restoring this version
-                 * @maxLength 500
-                 */
-                changeReason?: string;
-            },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        documentId: string;
-                        versionNumber: number;
-                        content?: string | null;
-                        metadata?: object | null;
-                        fileInfo?: {
-                            originalName?: string;
-                            mimeType?: string;
-                            size?: number;
-                            storageKey?: string;
-                            checksum?: string;
-                        } | null;
-                        changeReason?: string | null;
-                        createdBy: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            /** @format email */
-                            email: string;
-                        };
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}/versions/${version}/restore`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -4408,125 +2981,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             toVersion: string,
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        fromVersion: {
-                            /** @format uuid */
-                            id: string;
-                            /** @format uuid */
-                            documentId: string;
-                            versionNumber: number;
-                            content?: string | null;
-                            metadata?: object | null;
-                            fileInfo?: {
-                                originalName?: string;
-                                mimeType?: string;
-                                size?: number;
-                                storageKey?: string;
-                                checksum?: string;
-                            } | null;
-                            changeReason?: string | null;
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        };
-                        toVersion: {
-                            /** @format uuid */
-                            id: string;
-                            /** @format uuid */
-                            documentId: string;
-                            versionNumber: number;
-                            content?: string | null;
-                            metadata?: object | null;
-                            fileInfo?: {
-                                originalName?: string;
-                                mimeType?: string;
-                                size?: number;
-                                storageKey?: string;
-                                checksum?: string;
-                            } | null;
-                            changeReason?: string | null;
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        };
-                        differences: {
-                            content?: object[];
-                            metadata?: object[];
-                        };
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/${documentId}/versions/${fromVersion}/compare/${toVersion}`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4539,69 +2997,10 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         getDocumentsStatisticsVersions: (params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        totalVersions: number;
-                        totalDocuments: number;
-                        averageVersionsPerDocument: number;
-                        storageUsed: number;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/statistics/versions`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4633,100 +3032,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        children: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            hasFile: boolean;
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        }[];
-                        parentPath: string;
-                        count: number;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<any, any>({
                 path: `/documents/children-by-path`,
                 method: "GET",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -4738,116 +3048,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents/copy
          * @secure
          */
-        postDocumentsCopy: (
-            data: {
-                /**
-                 * Array of document IDs to copy
-                 * @maxItems 100
-                 * @minItems 1
-                 */
-                documentIds: string[];
-                /**
-                 * Target folder ID (null for root level)
-                 * @format uuid
-                 */
-                targetFolderId?: string | null;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        copiedDocuments: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            hasFile: boolean;
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        }[];
-                        count: number;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocumentsCopy: (params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents/copy`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -4859,116 +3064,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents/move
          * @secure
          */
-        postDocumentsMove: (
-            data: {
-                /**
-                 * Array of document IDs to move
-                 * @maxItems 100
-                 * @minItems 1
-                 */
-                documentIds: string[];
-                /**
-                 * Target folder ID (null for root level)
-                 * @format uuid
-                 */
-                targetFolderId?: string | null;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        movedDocuments: {
-                            /** @format uuid */
-                            id: string;
-                            title: string;
-                            status: "draft" | "published" | "archived";
-                            currentVersion: number;
-                            documentType: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                description?: string | null;
-                            };
-                            createdBy: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                            };
-                            /** @format uuid */
-                            parentId?: string | null;
-                            hasFile: boolean;
-                            permissions: {
-                                canView?: boolean;
-                                canEdit?: boolean;
-                                canDelete?: boolean;
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                        }[];
-                        count: number;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocumentsMove: (params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents/move`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -4980,84 +3080,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents/trash
          * @secure
          */
-        postDocumentsTrash: (
-            data: {
-                /**
-                 * Array of document IDs to move to trash
-                 * @maxItems 100
-                 * @minItems 1
-                 */
-                documentIds: string[];
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        trashedCount: number;
-                        errors: {
-                            /** @format uuid */
-                            documentId: string;
-                            error: string;
-                        }[];
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocumentsTrash: (params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents/trash`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -5069,83 +3096,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents/empty-trash
          * @secure
          */
-        postDocumentsEmptyTrash: (
-            data: {
-                /**
-                 * Array of document IDs to permanently delete (empty array = delete all trash)
-                 * @maxItems 100
-                 */
-                documentIds?: string[];
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        deletedCount: number;
-                        errors: {
-                            /** @format uuid */
-                            documentId: string;
-                            error: string;
-                        }[];
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocumentsEmptyTrash: (params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents/empty-trash`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -5157,84 +3112,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/documents/restore
          * @secure
          */
-        postDocumentsRestore: (
-            data: {
-                /**
-                 * Array of document IDs to restore from trash
-                 * @maxItems 100
-                 * @minItems 1
-                 */
-                documentIds: string[];
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: true;
-                    data: {
-                        restoredCount: number;
-                        errors: {
-                            /** @format uuid */
-                            documentId: string;
-                            error: string;
-                        }[];
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postDocumentsRestore: (params: RequestParams = {}) =>
+            this.request<any, any>({
                 path: `/documents/restore`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
     };
@@ -5271,26 +3153,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             params: RequestParams = {},
         ) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        items: any[];
-                        pagination: {
-                            page: number;
-                            limit: number;
-                            total: number;
-                            totalPages: number;
-                            hasNext: boolean;
-                            hasPrev: boolean;
-                        };
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -5343,7 +3206,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 method: "GET",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -5355,85 +3217,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/admin/document-types
          * @secure
          */
-        postAdminDocumentTypes: (
-            data: {
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                name: string;
-                /** @maxLength 1000 */
-                description?: string;
-                /**
-                 * @minLength 1
-                 * @maxLength 100
-                 * @pattern ^[a-z0-9-_]+$
-                 */
-                slug?: string;
-                /** @maxLength 50 */
-                icon?: string;
-                /** @pattern ^#[0-9a-fA-F]{6}$ */
-                color?: string;
-                metadataSchema?: {
-                    fields: {
-                        /** @minLength 1 */
-                        id: string;
-                        /** @minLength 1 */
-                        name: string;
-                        type:
-                            | "text"
-                            | "number"
-                            | "date"
-                            | "boolean"
-                            | "select"
-                            | "multiselect"
-                            | "url"
-                            | "email"
-                            | "relation";
-                        required: boolean;
-                        defaultValue?: any;
-                        options?: string[];
-                        validation?: {
-                            min?: number;
-                            max?: number;
-                            pattern?: string;
-                            message?: string;
-                        };
-                        rules?: {
-                            showFor?: string[];
-                            hideFor?: string[];
-                            readonlyFor?: string[];
-                            maskFor?: string[];
-                        };
-                        relationConfig?: {
-                            targetType?: "document" | "user" | "group";
-                            multiple?: boolean;
-                            allowedDocumentTypes?: string[];
-                        };
-                        /** @min 0 */
-                        displayOrder?: number;
-                    }[];
-                };
-                settings?: {
-                    allowVersioning?: boolean;
-                    requireApproval?: boolean;
-                    autoArchive?: {
-                        enabled: boolean;
-                        /** @min 1 */
-                        afterDays: number;
-                    };
-                    permissions?: {
-                        defaultViewers?: string[];
-                        defaultEditors?: string[];
-                    };
-                };
-                /** @default true */
-                isActive?: boolean;
-                /** @min 0 */
-                displayOrder?: number;
-            },
-            params: RequestParams = {},
-        ) =>
+        postAdminDocumentTypes: (params: RequestParams = {}) =>
             this.request<
                 {
                     success: true;
@@ -5481,6 +3265,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                         displayOrder: number;
                         /** @min 0 */
                         documentCount: number;
+                        /**
+                         * Bitwise permissions for the current user on this document type
+                         * @min 0
+                         */
+                        userPermissions: number;
                         /** @format date-time */
                         createdAt: string;
                         /** @format date-time */
@@ -5550,9 +3339,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/document-types`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
                 format: "json",
                 ...params,
             }),
@@ -5567,42 +3354,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminDocumentTypesStats: (params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @min 0 */
-                        totalDocumentTypes: number;
-                        /** @min 0 */
-                        activeDocumentTypes: number;
-                        /** @min 0 */
-                        inactiveDocumentTypes: number;
-                        /** @min 0 */
-                        systemDocumentTypes: number;
-                        /** @min 0 */
-                        customDocumentTypes: number;
-                        /** @min 0 */
-                        documentTypesWithDocuments: number;
-                        /** @min 0 */
-                        emptyDocumentTypes: number;
-                        /** @min 0 */
-                        totalDocuments: number;
-                        /** @min 0 */
-                        avgDocumentsPerType: number;
-                        mostUsedDocumentType: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            /** @min 0 */
-                            documentCount?: number;
-                        };
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -5654,7 +3406,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/document-types/stats`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -5668,71 +3419,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminDocumentTypesId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        companyId: string;
-                        name: string;
-                        description?: null | string;
-                        slug: string;
-                        icon?: null | string;
-                        color?: null | string;
-                        metadataSchema?: {
-                            fields?: {
-                                id?: string;
-                                name?: string;
-                                type?:
-                                    | "text"
-                                    | "number"
-                                    | "date"
-                                    | "boolean"
-                                    | "select"
-                                    | "multiselect"
-                                    | "url"
-                                    | "email"
-                                    | "relation";
-                                required?: boolean;
-                                defaultValue?: any;
-                                options?: string[];
-                                validation?: object;
-                                rules?: object;
-                                relationConfig?: object;
-                                displayOrder?: number;
-                            }[];
-                        };
-                        settings?: {
-                            allowVersioning?: boolean;
-                            requireApproval?: boolean;
-                            autoArchive?: object;
-                            permissions?: object;
-                        };
-                        isActive: boolean;
-                        /** @min 0 */
-                        displayOrder: number;
-                        /** @min 0 */
-                        documentCount: number;
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                        createdBy?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            /** @format email */
-                            email?: string;
-                        };
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -5784,7 +3471,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/document-types/${id}`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -5796,151 +3482,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request PUT:/admin/document-types/{id}
          * @secure
          */
-        putAdminDocumentTypesId: (
-            id: string,
-            data: {
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                name?: string;
-                /** @maxLength 1000 */
-                description?: string | null;
-                /**
-                 * @minLength 1
-                 * @maxLength 100
-                 * @pattern ^[a-z0-9-_]+$
-                 */
-                slug?: string;
-                /** @maxLength 50 */
-                icon?: string | null;
-                /** @pattern ^#[0-9a-fA-F]{6}$ */
-                color?: string | null;
-                metadataSchema?: {
-                    fields: {
-                        /** @minLength 1 */
-                        id: string;
-                        /** @minLength 1 */
-                        name: string;
-                        type:
-                            | "text"
-                            | "number"
-                            | "date"
-                            | "boolean"
-                            | "select"
-                            | "multiselect"
-                            | "url"
-                            | "email"
-                            | "relation";
-                        required: boolean;
-                        defaultValue?: any;
-                        options?: string[];
-                        validation?: {
-                            min?: number;
-                            max?: number;
-                            pattern?: string;
-                            message?: string;
-                        };
-                        rules?: {
-                            showFor?: string[];
-                            hideFor?: string[];
-                            readonlyFor?: string[];
-                            maskFor?: string[];
-                        };
-                        relationConfig?: {
-                            targetType?: "document" | "user" | "group";
-                            multiple?: boolean;
-                            allowedDocumentTypes?: string[];
-                        };
-                        /** @min 0 */
-                        displayOrder?: number;
-                    }[];
-                };
-                settings?: {
-                    allowVersioning?: boolean;
-                    requireApproval?: boolean;
-                    autoArchive?: {
-                        enabled: boolean;
-                        /** @min 1 */
-                        afterDays: number;
-                    };
-                    permissions?: {
-                        defaultViewers?: string[];
-                        defaultEditors?: string[];
-                    };
-                };
-                isActive?: boolean;
-                /** @min 0 */
-                displayOrder?: number;
-            },
-            params: RequestParams = {},
-        ) =>
+        putAdminDocumentTypesId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        companyId: string;
-                        name: string;
-                        description?: null | string;
-                        slug: string;
-                        icon?: null | string;
-                        color?: null | string;
-                        metadataSchema?: {
-                            fields?: {
-                                id?: string;
-                                name?: string;
-                                type?:
-                                    | "text"
-                                    | "number"
-                                    | "date"
-                                    | "boolean"
-                                    | "select"
-                                    | "multiselect"
-                                    | "url"
-                                    | "email"
-                                    | "relation";
-                                required?: boolean;
-                                defaultValue?: any;
-                                options?: string[];
-                                validation?: object;
-                                rules?: object;
-                                relationConfig?: object;
-                                displayOrder?: number;
-                            }[];
-                        };
-                        settings?: {
-                            allowVersioning?: boolean;
-                            requireApproval?: boolean;
-                            autoArchive?: object;
-                            permissions?: object;
-                        };
-                        isActive: boolean;
-                        /** @min 0 */
-                        displayOrder: number;
-                        /** @min 0 */
-                        documentCount: number;
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                        createdBy?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            /** @format email */
-                            email?: string;
-                        };
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -5991,10 +3535,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/document-types/${id}`,
                 method: "PUT",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -6025,157 +3566,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/document-types/bulk`,
                 method: "POST",
                 secure: true,
-                ...params,
-            }),
-
-        /**
-         * @description Grant can_apply permission for a document type
-         *
-         * @tags Document Type Permissions
-         * @name PostAdminDocumentTypesIdPermissionsGrant
-         * @request POST:/admin/document-types/{id}/permissions/grant
-         * @secure
-         */
-        postAdminDocumentTypesIdPermissionsGrant: (
-            id: string,
-            data: {
-                granteeType: "user" | "role" | "group";
-                granteeId: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                void,
-                {
-                    success?: boolean;
-                    error?: {
-                        code?: string;
-                        message?: string;
-                    };
-                }
-            >({
-                path: `/admin/document-types/${id}/permissions/grant`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                ...params,
-            }),
-
-        /**
-         * @description Revoke can_apply permission for a document type
-         *
-         * @tags Document Type Permissions
-         * @name PostAdminDocumentTypesIdPermissionsRevoke
-         * @request POST:/admin/document-types/{id}/permissions/revoke
-         * @secure
-         */
-        postAdminDocumentTypesIdPermissionsRevoke: (
-            id: string,
-            data: {
-                granteeType: "user" | "role" | "group";
-                granteeId: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<void, any>({
-                path: `/admin/document-types/${id}/permissions/revoke`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                ...params,
-            }),
-
-        /**
-         * @description List all permissions for a document type
-         *
-         * @tags Document Type Permissions
-         * @name GetAdminDocumentTypesIdPermissions
-         * @request GET:/admin/document-types/{id}/permissions
-         * @secure
-         */
-        getAdminDocumentTypesIdPermissions: (id: string, params: RequestParams = {}) =>
-            this.request<
-                {
-                    success?: boolean;
-                    data?: {
-                        documentTypeId?: string;
-                        permissions?: {
-                            can_apply?: {
-                                id?: string;
-                                type?: "user" | "role" | "group";
-                                name?: string;
-                            }[];
-                        };
-                    };
-                },
-                any
-            >({
-                path: `/admin/document-types/${id}/permissions`,
-                method: "GET",
-                secure: true,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Check if a user can apply a document type
-         *
-         * @tags Document Type Permissions
-         * @name GetAdminDocumentTypesIdPermissionsCheck
-         * @request GET:/admin/document-types/{id}/permissions/check
-         * @secure
-         */
-        getAdminDocumentTypesIdPermissionsCheck: (
-            id: string,
-            query: {
-                userId: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success?: boolean;
-                    data?: {
-                        userId?: string;
-                        documentTypeId?: string;
-                        canApply?: boolean;
-                    };
-                },
-                any
-            >({
-                path: `/admin/document-types/${id}/permissions/check`,
-                method: "GET",
-                query: query,
-                secure: true,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Get all document types the current user can apply
-         *
-         * @tags Document Type Permissions
-         * @name GetAdminDocumentTypesApplicable
-         * @request GET:/admin/document-types/applicable
-         * @secure
-         */
-        getAdminDocumentTypesApplicable: (params: RequestParams = {}) =>
-            this.request<
-                {
-                    success?: boolean;
-                    data?: {
-                        userId?: string;
-                        documentTypeIds?: string[];
-                    };
-                },
-                any
-            >({
-                path: `/admin/document-types/applicable`,
-                method: "GET",
-                secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -6213,88 +3603,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             params: RequestParams = {},
         ) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        roles: {
-                            /** @format uuid */
-                            id: string;
-                            /** @format uuid */
-                            companyId: string;
-                            name: string;
-                            description?: null | string;
-                            slug: string;
-                            /** @format uuid */
-                            parentId?: null | string;
-                            /** @min 0 */
-                            level: number;
-                            path: string;
-                            permissions: (
-                                | "view_file"
-                                | "edit_file"
-                                | "delete_file"
-                                | "create_folder"
-                                | "edit_folder"
-                                | "delete_folder"
-                                | "view_metadata"
-                                | "edit_metadata"
-                                | "manage_permissions"
-                                | "manage_users"
-                                | "manage_roles"
-                                | "manage_groups"
-                                | "manage_templates"
-                                | "manage_workflows"
-                                | "manage_integrations"
-                                | "view_analytics"
-                                | "manage_settings"
-                                | "manage_billing"
-                                | "super_admin"
-                            )[];
-                            isSystemRole: boolean;
-                            isActive: boolean;
-                            color?: null | string;
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                            /** Bitwise permissions for frontend UI optimization */
-                            userPermissions?: number;
-                            parent?: {
-                                /** @format uuid */
-                                id?: string;
-                                name?: string;
-                                slug?: string;
-                                level?: number;
-                            };
-                            children?: {
-                                /** @format uuid */
-                                id?: string;
-                                name?: string;
-                                slug?: string;
-                                level?: number;
-                                /** @min 0 */
-                                userCount?: number;
-                            }[];
-                            /** @min 0 */
-                            userCount?: number;
-                        }[];
-                        /** @min 0 */
-                        total: number;
-                        /** @min 1 */
-                        page: number;
-                        /** @min 1 */
-                        limit: number;
-                        /** @min 1 */
-                        totalPages: number;
-                        hasMore: boolean;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -6347,7 +3656,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 method: "GET",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -6359,52 +3667,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/admin/roles
          * @secure
          */
-        postAdminRoles: (
-            data: {
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                name: string;
-                /** @maxLength 1000 */
-                description?: string;
-                /**
-                 * @minLength 1
-                 * @maxLength 100
-                 * @pattern ^[a-z0-9-_]+$
-                 */
-                slug?: string;
-                /** @format uuid */
-                parentId?: string;
-                /** @uniqueItems true */
-                permissions?: (
-                    | "view_file"
-                    | "edit_file"
-                    | "delete_file"
-                    | "create_folder"
-                    | "edit_folder"
-                    | "delete_folder"
-                    | "view_metadata"
-                    | "edit_metadata"
-                    | "manage_permissions"
-                    | "manage_users"
-                    | "manage_roles"
-                    | "manage_groups"
-                    | "manage_templates"
-                    | "manage_workflows"
-                    | "manage_integrations"
-                    | "view_analytics"
-                    | "manage_settings"
-                    | "manage_billing"
-                    | "super_admin"
-                )[];
-                /** @default true */
-                isActive?: boolean;
-                /** @pattern ^#[0-9a-fA-F]{6}$ */
-                color?: string;
-            },
-            params: RequestParams = {},
-        ) =>
+        postAdminRoles: (params: RequestParams = {}) =>
             this.request<
                 {
                     success: true;
@@ -6527,9 +3790,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/roles`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
                 format: "json",
                 ...params,
             }),
@@ -6544,77 +3805,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminRolesId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        companyId: string;
-                        name: string;
-                        description?: null | string;
-                        slug: string;
-                        /** @format uuid */
-                        parentId?: null | string;
-                        /** @min 0 */
-                        level: number;
-                        path: string;
-                        permissions: (
-                            | "view_file"
-                            | "edit_file"
-                            | "delete_file"
-                            | "create_folder"
-                            | "edit_folder"
-                            | "delete_folder"
-                            | "view_metadata"
-                            | "edit_metadata"
-                            | "manage_permissions"
-                            | "manage_users"
-                            | "manage_roles"
-                            | "manage_groups"
-                            | "manage_templates"
-                            | "manage_workflows"
-                            | "manage_integrations"
-                            | "view_analytics"
-                            | "manage_settings"
-                            | "manage_billing"
-                            | "super_admin"
-                        )[];
-                        isSystemRole: boolean;
-                        isActive: boolean;
-                        color?: null | string;
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                        /** Bitwise permissions for frontend UI optimization */
-                        userPermissions?: number;
-                        parent?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            slug?: string;
-                            level?: number;
-                        };
-                        children?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            slug?: string;
-                            level?: number;
-                            /** @min 0 */
-                            userCount?: number;
-                        }[];
-                        /** @min 0 */
-                        userCount?: number;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -6666,7 +3857,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/roles/${id}`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -6678,124 +3868,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request PUT:/admin/roles/{id}
          * @secure
          */
-        putAdminRolesId: (
-            id: string,
-            data: {
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                name?: string;
-                /** @maxLength 1000 */
-                description?: string | null;
-                /**
-                 * @minLength 1
-                 * @maxLength 100
-                 * @pattern ^[a-z0-9-_]+$
-                 */
-                slug?: string;
-                /** @format uuid */
-                parentId?: string | null;
-                /** @uniqueItems true */
-                permissions?: (
-                    | "view_file"
-                    | "edit_file"
-                    | "delete_file"
-                    | "create_folder"
-                    | "edit_folder"
-                    | "delete_folder"
-                    | "view_metadata"
-                    | "edit_metadata"
-                    | "manage_permissions"
-                    | "manage_users"
-                    | "manage_roles"
-                    | "manage_groups"
-                    | "manage_templates"
-                    | "manage_workflows"
-                    | "manage_integrations"
-                    | "view_analytics"
-                    | "manage_settings"
-                    | "manage_billing"
-                    | "super_admin"
-                )[];
-                isActive?: boolean;
-                /** @pattern ^#[0-9a-fA-F]{6}$ */
-                color?: string | null;
-            },
-            params: RequestParams = {},
-        ) =>
+        putAdminRolesId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        companyId: string;
-                        name: string;
-                        description?: null | string;
-                        slug: string;
-                        /** @format uuid */
-                        parentId?: null | string;
-                        /** @min 0 */
-                        level: number;
-                        path: string;
-                        permissions: (
-                            | "view_file"
-                            | "edit_file"
-                            | "delete_file"
-                            | "create_folder"
-                            | "edit_folder"
-                            | "delete_folder"
-                            | "view_metadata"
-                            | "edit_metadata"
-                            | "manage_permissions"
-                            | "manage_users"
-                            | "manage_roles"
-                            | "manage_groups"
-                            | "manage_templates"
-                            | "manage_workflows"
-                            | "manage_integrations"
-                            | "view_analytics"
-                            | "manage_settings"
-                            | "manage_billing"
-                            | "super_admin"
-                        )[];
-                        isSystemRole: boolean;
-                        isActive: boolean;
-                        color?: null | string;
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                        /** Bitwise permissions for frontend UI optimization */
-                        userPermissions?: number;
-                        parent?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            slug?: string;
-                            level?: number;
-                        };
-                        children?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            slug?: string;
-                            level?: number;
-                            /** @min 0 */
-                            userCount?: number;
-                        }[];
-                        /** @min 0 */
-                        userCount?: number;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -6846,10 +3921,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/roles/${id}`,
                 method: "PUT",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -6863,18 +3935,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         deleteAdminRolesId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -6926,7 +3987,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/roles/${id}`,
                 method: "DELETE",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -6940,32 +4000,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminRolesHierarchyTree: (params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        hierarchy: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            slug: string;
-                            /** @min 0 */
-                            level: number;
-                            permissions: string[];
-                            inheritedPermissions?: string[];
-                            totalPermissions?: string[];
-                            /** @min 0 */
-                            userCount: number;
-                            isActive: boolean;
-                            children: any[];
-                        }[];
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7017,7 +4052,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/roles/hierarchy/tree`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -7031,35 +4065,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminRolesStats: (params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @min 0 */
-                        totalRoles: number;
-                        /** @min 0 */
-                        activeRoles: number;
-                        /** @min 0 */
-                        inactiveRoles: number;
-                        /** @min 0 */
-                        systemRoles: number;
-                        /** @min 0 */
-                        customRoles: number;
-                        /** @min 0 */
-                        rolesWithUsers: number;
-                        /** @min 0 */
-                        emptyRoles: number;
-                        /** @min 0 */
-                        maxLevel: number;
-                        /** @min 0 */
-                        avgUsersPerRole: number;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7111,7 +4117,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/roles/stats`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -7147,70 +4152,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             params: RequestParams = {},
         ) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        groups: {
-                            /** @format uuid */
-                            id: string;
-                            /** @format uuid */
-                            companyId: string;
-                            name: string;
-                            description?: null | string;
-                            slug: string;
-                            isActive: boolean;
-                            color?: null | string;
-                            /** @min 0 */
-                            memberCount: number;
-                            settings?: {
-                                allowSelfJoin?: boolean;
-                                requireApproval?: boolean;
-                                /** @min 1 */
-                                maxMembers?: null | number;
-                                visibility?: "public" | "private" | "hidden";
-                            };
-                            /** @format date-time */
-                            createdAt: string;
-                            /** @format date-time */
-                            updatedAt: string;
-                            /** Bitwise permissions for frontend UI optimization */
-                            userPermissions?: number;
-                            createdBy?: {
-                                /** @format uuid */
-                                id?: string;
-                                name?: string;
-                                /** @format email */
-                                email?: string;
-                            };
-                            members?: {
-                                /** @format uuid */
-                                id: string;
-                                name: string;
-                                /** @format email */
-                                email: string;
-                                status: "active" | "pending" | "suspended";
-                                /** @format date-time */
-                                joinedAt: string;
-                                role?: null | string;
-                            }[];
-                        }[];
-                        /** @min 0 */
-                        total: number;
-                        /** @min 1 */
-                        page: number;
-                        /** @min 1 */
-                        limit: number;
-                        /** @min 1 */
-                        totalPages: number;
-                        hasMore: boolean;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7263,7 +4205,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 method: "GET",
                 query: query,
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -7275,38 +4216,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/admin/groups
          * @secure
          */
-        postAdminGroups: (
-            data: {
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                name: string;
-                /** @maxLength 1000 */
-                description?: string;
-                /**
-                 * @minLength 1
-                 * @maxLength 100
-                 * @pattern ^[a-z0-9-_]+$
-                 */
-                slug?: string;
-                /** @default true */
-                isActive?: boolean;
-                /** @pattern ^#[0-9a-fA-F]{6}$ */
-                color?: string;
-                settings?: {
-                    /** @default false */
-                    allowSelfJoin?: boolean;
-                    /** @default true */
-                    requireApproval?: boolean;
-                    /** @min 1 */
-                    maxMembers?: number;
-                    /** @default "private" */
-                    visibility?: "public" | "private" | "hidden";
-                };
-            },
-            params: RequestParams = {},
-        ) =>
+        postAdminGroups: (params: RequestParams = {}) =>
             this.request<
                 {
                     success: true;
@@ -7411,9 +4321,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/groups`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
                 format: "json",
                 ...params,
             }),
@@ -7428,59 +4336,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminGroupsId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        companyId: string;
-                        name: string;
-                        description?: null | string;
-                        slug: string;
-                        isActive: boolean;
-                        color?: null | string;
-                        /** @min 0 */
-                        memberCount: number;
-                        settings?: {
-                            allowSelfJoin?: boolean;
-                            requireApproval?: boolean;
-                            /** @min 1 */
-                            maxMembers?: null | number;
-                            visibility?: "public" | "private" | "hidden";
-                        };
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                        /** Bitwise permissions for frontend UI optimization */
-                        userPermissions?: number;
-                        createdBy?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            /** @format email */
-                            email?: string;
-                        };
-                        members?: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            /** @format email */
-                            email: string;
-                            status: "active" | "pending" | "suspended";
-                            /** @format date-time */
-                            joinedAt: string;
-                            role?: null | string;
-                        }[];
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7532,7 +4388,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/groups/${id}`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -7544,89 +4399,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request PUT:/admin/groups/{id}
          * @secure
          */
-        putAdminGroupsId: (
-            id: string,
-            data: {
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                name?: string;
-                /** @maxLength 1000 */
-                description?: string | null;
-                /**
-                 * @minLength 1
-                 * @maxLength 100
-                 * @pattern ^[a-z0-9-_]+$
-                 */
-                slug?: string;
-                isActive?: boolean;
-                /** @pattern ^#[0-9a-fA-F]{6}$ */
-                color?: string | null;
-                settings?: {
-                    allowSelfJoin?: boolean;
-                    requireApproval?: boolean;
-                    /** @min 1 */
-                    maxMembers?: number | null;
-                    visibility?: "public" | "private" | "hidden";
-                };
-            },
-            params: RequestParams = {},
-        ) =>
+        putAdminGroupsId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @format uuid */
-                        id: string;
-                        /** @format uuid */
-                        companyId: string;
-                        name: string;
-                        description?: null | string;
-                        slug: string;
-                        isActive: boolean;
-                        color?: null | string;
-                        /** @min 0 */
-                        memberCount: number;
-                        settings?: {
-                            allowSelfJoin?: boolean;
-                            requireApproval?: boolean;
-                            /** @min 1 */
-                            maxMembers?: null | number;
-                            visibility?: "public" | "private" | "hidden";
-                        };
-                        /** @format date-time */
-                        createdAt: string;
-                        /** @format date-time */
-                        updatedAt: string;
-                        /** Bitwise permissions for frontend UI optimization */
-                        userPermissions?: number;
-                        createdBy?: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            /** @format email */
-                            email?: string;
-                        };
-                        members?: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            /** @format email */
-                            email: string;
-                            status: "active" | "pending" | "suspended";
-                            /** @format date-time */
-                            joinedAt: string;
-                            role?: null | string;
-                        }[];
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7677,10 +4452,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/groups/${id}`,
                 method: "PUT",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -7694,18 +4466,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         deleteAdminGroupsId: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7757,7 +4518,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/groups/${id}`,
                 method: "DELETE",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -7771,30 +4531,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminGroupsUserUserid: (userId: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        groups: {
-                            /** @format uuid */
-                            id: string;
-                            name: string;
-                            description?: null | string;
-                            slug: string;
-                            isActive: boolean;
-                            /** @min 0 */
-                            memberCount: number;
-                            status: "active" | "pending" | "suspended";
-                            /** @format date-time */
-                            joinedAt: string;
-                        }[];
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7846,7 +4583,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/groups/user/${userId}`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
 
@@ -7858,30 +4594,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/admin/groups/{id}/members
          * @secure
          */
-        postAdminGroupsIdMembers: (
-            id: string,
-            data: {
-                /**
-                 * @minItems 1
-                 * @uniqueItems true
-                 */
-                userIds: string[];
-            },
-            params: RequestParams = {},
-        ) =>
+        postAdminGroupsIdMembers: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -7932,10 +4647,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/groups/${id}/members`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -7947,30 +4659,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request DELETE:/admin/groups/{id}/members
          * @secure
          */
-        deleteAdminGroupsIdMembers: (
-            id: string,
-            data: {
-                /**
-                 * @minItems 1
-                 * @uniqueItems true
-                 */
-                userIds: string[];
-            },
-            params: RequestParams = {},
-        ) =>
+        deleteAdminGroupsIdMembers: (id: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -8021,10 +4712,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/groups/${id}/members`,
                 method: "DELETE",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -8036,27 +4724,9 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request PUT:/admin/groups/{id}/members/{userId}/status
          * @secure
          */
-        putAdminGroupsIdMembersUseridStatus: (
-            id: string,
-            userId: string,
-            data: {
-                status: "active" | "pending" | "suspended";
-            },
-            params: RequestParams = {},
-        ) =>
+        putAdminGroupsIdMembersUseridStatus: (id: string, userId: string, params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        message: string;
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -8107,10 +4777,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             >({
                 path: `/admin/groups/${id}/members/${userId}/status`,
                 method: "PUT",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -8124,44 +4791,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         getAdminGroupsStats: (params: RequestParams = {}) =>
             this.request<
-                {
-                    success: true;
-                    data: {
-                        /** @min 0 */
-                        totalGroups: number;
-                        /** @min 0 */
-                        activeGroups: number;
-                        /** @min 0 */
-                        inactiveGroups: number;
-                        /** @min 0 */
-                        publicGroups: number;
-                        /** @min 0 */
-                        privateGroups: number;
-                        /** @min 0 */
-                        hiddenGroups: number;
-                        /** @min 0 */
-                        groupsWithMembers: number;
-                        /** @min 0 */
-                        emptyGroups: number;
-                        /** @min 0 */
-                        totalMembers: number;
-                        /** @min 0 */
-                        avgMembersPerGroup: number;
-                        largestGroup: {
-                            /** @format uuid */
-                            id?: string;
-                            name?: string;
-                            /** @min 0 */
-                            memberCount?: number;
-                        };
-                    };
-                    meta?: {
-                        /** @format date-time */
-                        timestamp?: string;
-                        requestId?: string;
-                        message?: string;
-                    };
-                },
+                any,
                 | {
                       /** @default false */
                       success?: false;
@@ -8213,7 +4843,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 path: `/admin/groups/stats`,
                 method: "GET",
                 secure: true,
-                format: "json",
                 ...params,
             }),
     };
@@ -8404,929 +5033,6 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                 ...params,
             }),
     };
-    permissions = {
-        /**
-         * @description Get permission metadata including base permissions, computed permissions, and presets
-         *
-         * @tags Permissions
-         * @name GetPermissionsPermissionsMetadata
-         * @request GET:/permissions/permissions/metadata
-         * @secure
-         */
-        getPermissionsPermissionsMetadata: (params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        basePermissions: {
-                            name: string;
-                            description: string;
-                            category: "read" | "write" | "manage";
-                        }[];
-                        computedPermissions: {
-                            name: string;
-                            description: string;
-                            implies: string[];
-                        }[];
-                        presets: {
-                            name: string;
-                            description: string;
-                            permissions: string[];
-                        }[];
-                        categories: Record<string, string[]>;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/metadata`,
-                method: "GET",
-                secure: true,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Grant a permission to a user, role, or group
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsGrant
-         * @request POST:/permissions/permissions/grant
-         * @secure
-         */
-        postPermissionsPermissionsGrant: (
-            data: {
-                /**
-                 * Document ID to grant permission for
-                 * @format uuid
-                 */
-                documentId: string;
-                /** Type of entity receiving the permission */
-                granteeType: "user" | "role" | "group";
-                /**
-                 * ID of the user, role, or group
-                 * @format uuid
-                 */
-                granteeId: string;
-                /** Permission to grant */
-                permission:
-                    | "can_view_content"
-                    | "can_view_metadata"
-                    | "can_view_permissions"
-                    | "can_download"
-                    | "can_print"
-                    | "can_edit_content"
-                    | "can_edit_metadata"
-                    | "can_share"
-                    | "can_create_child"
-                    | "can_delete"
-                    | "can_manage_permissions"
-                    | "can_audit";
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    message: string;
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/grant`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Revoke a permission from a user, role, or group
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsRevoke
-         * @request POST:/permissions/permissions/revoke
-         * @secure
-         */
-        postPermissionsPermissionsRevoke: (
-            data: {
-                /**
-                 * Document ID to grant permission for
-                 * @format uuid
-                 */
-                documentId: string;
-                /** Type of entity receiving the permission */
-                granteeType: "user" | "role" | "group";
-                /**
-                 * ID of the user, role, or group
-                 * @format uuid
-                 */
-                granteeId: string;
-                /** Permission to grant */
-                permission:
-                    | "can_view_content"
-                    | "can_view_metadata"
-                    | "can_view_permissions"
-                    | "can_download"
-                    | "can_print"
-                    | "can_edit_content"
-                    | "can_edit_metadata"
-                    | "can_share"
-                    | "can_create_child"
-                    | "can_delete"
-                    | "can_manage_permissions"
-                    | "can_audit";
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    message: string;
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/revoke`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Grant a permission preset to a user, role, or group
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsGrantPreset
-         * @request POST:/permissions/permissions/grant-preset
-         * @secure
-         */
-        postPermissionsPermissionsGrantPreset: (
-            data: {
-                /**
-                 * Document ID to grant preset for
-                 * @format uuid
-                 */
-                documentId: string;
-                /** Type of entity receiving the preset */
-                granteeType: "user" | "role" | "group";
-                /**
-                 * ID of the user, role, or group
-                 * @format uuid
-                 */
-                granteeId: string;
-                /** Permission preset to grant */
-                preset: "owner" | "viewer" | "editor" | "contributor" | "manager";
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    message: string;
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/grant-preset`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Revoke a permission preset from a user, role, or group
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsRevokePreset
-         * @request POST:/permissions/permissions/revoke-preset
-         * @secure
-         */
-        postPermissionsPermissionsRevokePreset: (
-            data: {
-                /**
-                 * Document ID to grant preset for
-                 * @format uuid
-                 */
-                documentId: string;
-                /** Type of entity receiving the preset */
-                granteeType: "user" | "role" | "group";
-                /**
-                 * ID of the user, role, or group
-                 * @format uuid
-                 */
-                granteeId: string;
-                /** Permission preset to grant */
-                preset: "owner" | "viewer" | "editor" | "contributor" | "manager";
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    message: string;
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/revoke-preset`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Check if the current user has a specific permission on a document
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsCheck
-         * @request POST:/permissions/permissions/check
-         * @secure
-         */
-        postPermissionsPermissionsCheck: (
-            data: {
-                /**
-                 * Document ID to check permission for
-                 * @format uuid
-                 */
-                documentId: string;
-                /** Permission to check */
-                permission:
-                    | "can_view_content"
-                    | "can_view_metadata"
-                    | "can_view_permissions"
-                    | "can_download"
-                    | "can_print"
-                    | "can_edit_content"
-                    | "can_edit_metadata"
-                    | "can_share"
-                    | "can_create_child"
-                    | "can_delete"
-                    | "can_manage_permissions"
-                    | "can_audit";
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        allowed: boolean;
-                        permission: string;
-                        documentId: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/check`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Check multiple permissions at once for the current user
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsBatchCheck
-         * @request POST:/permissions/permissions/batch-check
-         * @secure
-         */
-        postPermissionsPermissionsBatchCheck: (
-            data: {
-                /**
-                 * @maxItems 100
-                 * @minItems 1
-                 */
-                checks: {
-                    /** @format uuid */
-                    documentId: string;
-                    permission:
-                        | "can_view_content"
-                        | "can_view_metadata"
-                        | "can_view_permissions"
-                        | "can_download"
-                        | "can_print"
-                        | "can_edit_content"
-                        | "can_edit_metadata"
-                        | "can_share"
-                        | "can_create_child"
-                        | "can_delete"
-                        | "can_manage_permissions"
-                        | "can_audit";
-                }[];
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        results: {
-                            allowed: boolean;
-                            permission: string;
-                            documentId: string;
-                        }[];
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/batch-check`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Get all users who have access to a specific document
-         *
-         * @tags Permissions
-         * @name GetPermissionsPermissionsUsersDocumentid
-         * @request GET:/permissions/permissions/users/{documentId}
-         * @secure
-         */
-        getPermissionsPermissionsUsersDocumentid: (
-            documentId: string,
-            query?: {
-                permission?: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        users: {
-                            userId: string;
-                            userName: string;
-                            email: string;
-                            hasPermission: boolean;
-                        }[];
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/users/${documentId}`,
-                method: "GET",
-                query: query,
-                secure: true,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Get a comprehensive permission summary for a document
-         *
-         * @tags Permissions
-         * @name GetPermissionsPermissionsSummaryDocumentid
-         * @request GET:/permissions/permissions/summary/{documentId}
-         * @secure
-         */
-        getPermissionsPermissionsSummaryDocumentid: (documentId: string, params: RequestParams = {}) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        documentId: string;
-                        owner: string;
-                        usersWithAccess: {
-                            userId: string;
-                            userName: string;
-                            permissions: string[];
-                            source: string;
-                        }[];
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/summary/${documentId}`,
-                method: "GET",
-                secure: true,
-                format: "json",
-                ...params,
-            }),
-
-        /**
-         * @description Transfer ownership of a document to another user
-         *
-         * @tags Permissions
-         * @name PostPermissionsPermissionsTransferOwnership
-         * @request POST:/permissions/permissions/transfer-ownership
-         * @secure
-         */
-        postPermissionsPermissionsTransferOwnership: (
-            data: {
-                /**
-                 * Document ID to transfer ownership of
-                 * @format uuid
-                 */
-                documentId: string;
-                /**
-                 * ID of the new owner
-                 * @format uuid
-                 */
-                newOwnerId: string;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    message: string;
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
-                path: `/permissions/permissions/transfer-ownership`,
-                method: "POST",
-                body: data,
-                secure: true,
-                type: ContentType.Json,
-                format: "json",
-                ...params,
-            }),
-    };
     audit = {
         /**
          * @description Get company audit logs
@@ -9429,75 +5135,12 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        fileId: string;
-                        /** @format uuid */
-                        documentId: string;
-                        filename: string;
-                        size: number;
-                        mimeType: string;
-                        /** @format date-time */
-                        uploadedAt: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<void, any>({
                 path: `/files/upload`,
                 method: "POST",
                 body: data,
                 secure: true,
                 type: ContentType.FormData,
-                format: "json",
                 ...params,
             }),
 
@@ -9509,90 +5152,11 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @request POST:/files/upload-url
          * @secure
          */
-        postFilesUploadUrl: (
-            data: {
-                /** @format uuid */
-                documentId: string;
-                /**
-                 * @minLength 1
-                 * @maxLength 255
-                 */
-                filename: string;
-                /**
-                 * @min 60
-                 * @max 86400
-                 * @default 3600
-                 */
-                expirySeconds?: number;
-            },
-            params: RequestParams = {},
-        ) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        /** @format uri */
-                        uploadUrl: string;
-                        fileId: string;
-                        /** @format date-time */
-                        expiresAt: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+        postFilesUploadUrl: (params: RequestParams = {}) =>
+            this.request<void, any>({
                 path: `/files/upload-url`,
                 method: "POST",
-                body: data,
                 secure: true,
-                type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -9631,72 +5195,12 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
             },
             params: RequestParams = {},
         ) =>
-            this.request<
-                {
-                    success: boolean;
-                    data: {
-                        /** @format uri */
-                        downloadUrl: string;
-                        filename: string;
-                        /** @format date-time */
-                        expiresAt: string;
-                    };
-                },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<void, any>({
                 path: `/files/download-url/${storageKey}`,
                 method: "POST",
                 body: data,
                 secure: true,
                 type: ContentType.Json,
-                format: "json",
                 ...params,
             }),
 
@@ -9817,54 +5321,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     message?: string;
                     data?: object;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections`,
                 method: "POST",
@@ -9933,54 +5390,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     limit?: number;
                     offset?: number;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections`,
                 method: "GET",
@@ -10000,57 +5410,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @secure
          */
         getCollectionsCollectionsCollectionid: (collectionId: string, params: RequestParams = {}) =>
-            this.request<
-                object,
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
-            >({
+            this.request<object, any>({
                 path: `/collections/collections/${collectionId}`,
                 method: "GET",
                 secure: true,
@@ -10141,54 +5501,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     message?: string;
                     data?: object;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}`,
                 method: "PUT",
@@ -10214,54 +5527,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     success?: boolean;
                     message?: string;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}`,
                 method: "DELETE",
@@ -10319,54 +5585,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     limit?: number;
                     offset?: number;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/documents`,
                 method: "GET",
@@ -10431,54 +5650,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     message?: string;
                     data?: object;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/documents`,
                 method: "POST",
@@ -10508,54 +5680,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     success?: boolean;
                     message?: string;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/documents/${documentId}`,
                 method: "DELETE",
@@ -10595,54 +5720,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     success?: boolean;
                     message?: string;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/documents/${documentId}/position`,
                 method: "PUT",
@@ -10694,54 +5772,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     limit?: number;
                     offset?: number;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/members`,
                 method: "GET",
@@ -10782,54 +5813,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     message?: string;
                     data?: object;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/members`,
                 method: "POST",
@@ -10865,54 +5849,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     success?: boolean;
                     message?: string;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/members/${userId}`,
                 method: "PUT",
@@ -10942,54 +5879,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     success?: boolean;
                     message?: string;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/members/${userId}`,
                 method: "DELETE",
@@ -11040,54 +5930,7 @@ export class api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
                     limit?: number;
                     offset?: number;
                 },
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "VALIDATION_ERROR" | null;
-                          message: string;
-                          field?: string;
-                          details?: {
-                              validationErrors?: {
-                                  field?: string;
-                                  message?: string;
-                                  value?: any;
-                              }[];
-                          };
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "UNAUTHORIZED" | null;
-                          message: "Authentication required";
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "FORBIDDEN" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code: "NOT_FOUND" | null;
-                          message: string;
-                      };
-                  }
-                | {
-                      /** @default false */
-                      success?: false;
-                      error: {
-                          code?: "INTERNAL_ERROR" | null;
-                          message: "Internal server error";
-                      };
-                  }
+                any
             >({
                 path: `/collections/collections/${collectionId}/activities`,
                 method: "GET",

@@ -11,6 +11,8 @@ Welcome to the DocPal Node Client documentation. This guide will help you unders
 
 - [Getting Started](/6.0.0/getting-started) - Set up and run the application
 - [Authentication](/6.0.0/authentication) - Learn about the authentication system
+- [Event Bus System](/6.0.0/event-bus) - Global event messaging and communication
+- [Server Health Check](/6.0.0/server-health) - Server monitoring and downtime handling
 - [API Reference](/6.0.0/api) - Explore the available API endpoints
 - [Examples](/6.0.0/examples) - See practical examples and use cases
 
@@ -27,6 +29,8 @@ DocPal Node Client is a modern web application built with:
 ## Key Features
 
 - 🔐 **Authentication System** - Global middleware with route protection
+- 📡 **Event Bus System** - Global messaging with VueUse event bus for system events
+- 🔄 **Server Health Monitoring** - Automatic downtime detection and graceful error handling
 - 🌐 **Internationalization** - Multi-language support (en-US, zh-CN, zh-HK)
 - 📱 **Responsive Design** - Mobile-first approach
 - 🎨 **Modern UI** - Element Plus components

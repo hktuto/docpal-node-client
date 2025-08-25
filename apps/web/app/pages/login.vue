@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { ElCard, ElForm, ElFormItem, ElInput, ElButton } from 'element-plus'
+
 
 definePageMeta({
   public: true,
@@ -36,23 +36,34 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <ElCard class="cardContainer">
-    <ElForm :model="form" :rules="rules" label-position="top">
-      <ElFormItem label="Email" prop="email">
-        <ElInput v-model="form.email" />
-      </ElFormItem>
-      <ElFormItem label="Password" prop="password">
-        <ElInput v-model="form.password" type="password" />
-      </ElFormItem>
-    </ElForm>
-    <template #footer>
-      <ElButton type="primary" @click="handleLogin">Login</ElButton>
-    </template>
-  </ElCard>
+  <div class="container"> 
+ 
+    <ElCard class="cardContainer">
+      <ElForm :model="form" :rules="rules" label-position="top">
+        <ElFormItem label="Email" prop="email">
+          <ElInput v-model="form.email" />
+        </ElFormItem>
+        <ElFormItem label="Password" prop="password">
+          <ElInput v-model="form.password" type="password" />
+        </ElFormItem>
+      </ElForm>
+      <template #footer>
+        <ElButton type="primary" @click="handleLogin">Login</ElButton>
+      </template>
+    </ElCard>
+    <LoadingBg />
+   </div>
 </template>
 
 
 <style scoped>
+.container{
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
 .cardContainer{
   min-width: 260px;
   max-width: 600px;

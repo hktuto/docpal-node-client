@@ -3919,5 +3919,19 @@
   "所有內容": "Everything",
   "收藏夹": "Collection",
   "文件Keywords": "Keywords",
-  "檔案內容": "Content"
+  "檔案內容": "Content",
+  "serverDown": {
+    "title": "Server Temporarily Unavailable",
+    "message": "We're experiencing technical difficulties. Please try again in a few moments.",
+    "lastCheck": "Last Check",
+    "retryAttempts": "Retry attempts: {count}",
+    "retrying": "Checking server status...",
+    "retry": "Try Again",
+    "checking": "Checking...",
+    "goHome": "Go Home",
+    "helpText": "If this problem persists, try the following:",
+    "tip1": "Check your internet connection",
+    "tip2": "Wait a few minutes and try again",
+    "tip3": "Contact support if the issue continues"
+  }
 }

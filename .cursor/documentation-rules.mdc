@@ -1,0 +1,84 @@
+---
+alwaysApply: true
+---
+
+# Documentation Location Rules - MANDATORY
+
+## 🚨 CRITICAL RULE: Documentation Location Policy
+
+### ALL Documentation Must Be in `apps/docs/` Package
+
+**This is a MANDATORY requirement with NO exceptions:**
+
+- ✅ **Correct Location**: `apps/docs/content/`
+- ❌ **NEVER Place Documentation In**: 
+  - `apps/web/` (web application)
+  - `libraries/` (shared libraries)  
+  - `packages/` (shared packages)
+  - Root directory
+  - Any other location
+
+### Documentation Structure
+
+```
+apps/docs/content/
+├── index.md                    # Main documentation index
+├── getting-started.md          # General getting started
+├── authentication.md           # General auth docs
+├── event-bus.md               # General event bus docs
+├── server-health.md           # General health check docs
+└── 6.0.0/                     # Version-specific docs
+    ├── getting-started.md      # Version-specific setup
+    ├── authentication.md       # Version-specific auth
+    ├── event-bus.md           # Version-specific events
+    └── server-health.md       # Version-specific health
+```
+
+### What Constitutes "Documentation"
+
+- API documentation and guides
+- User guides and tutorials
+- System architecture documentation
+- Feature implementation guides
+- Code examples and snippets
+- Setup and installation guides
+- Troubleshooting guides
+- Best practices documentation
+- Change logs and release notes
+- Developer onboarding materials
+
+### Exception: Code Comments
+
+The ONLY exception to this rule is:
+- JSDoc comments within code files
+- Inline code comments for business logic
+- README.md files for individual packages (package-specific setup only)
+
+### Enforcement
+
+- **Code Reviews**: Reject any PR that places documentation outside `apps/docs/`
+- **AI Assistants**: Always move documentation to correct location
+- **Development**: Check documentation location before any commit
+- **Migration**: Move existing documentation from incorrect locations
+
+### Why This Rule Exists
+
+1. **Centralized Management**: All documentation in one place
+2. **Consistent Structure**: Predictable location for all docs
+3. **Version Control**: Proper versioning of documentation
+4. **Easy Maintenance**: Single source of truth
+5. **User Experience**: Clear navigation and discoverability
+
+## Quick Checklist
+
+Before creating or moving documentation:
+
+- [ ] Is this going in `apps/docs/content/`?
+- [ ] Is the version folder correct (check `apps/web/package.json`)?
+- [ ] Are internal links using versioned paths?
+- [ ] Is the main index updated with new content?
+- [ ] Have I removed any documentation from incorrect locations?
+
+---
+
+**Remember**: This rule is NON-NEGOTIABLE. All documentation belongs in `apps/docs/`.
