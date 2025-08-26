@@ -2,19 +2,33 @@
 <script setup lang="ts">
 import { useGlobalSetting } from "#imports";
 import { TabApp } from "#components";
-const tabAppRef = ref<InstanceType<typeof TabApp>>();
-const emits = defineEmits(["ready"]);
+const tabAppRef = useTemplateRef<typeof TabApp>('tabAppRef');
+const emits = defineEmits(["ready"]); 
 
-const props = defineProps<{
-  mode: 'client' | 'admin',
-  defaultTab?: any
-}>()
+const config = useAppConfig()
 
+const emptyTab = {
+  id: "new-tab-001",
+  label: "New Tab",
+  name: "new-tab-001",
+  parent: "dummy-tab-container",
+  component: "LazyTabEmpty",
+};
+
+const defaultTab = computed(() => {
+  const configTab = config.defaultTab as string;
+  console.log("configTab", config, config.appMenu)
+  if(!configTab) return emptyTab;
+  if(config.appMenu && (config as any).appMenu[configTab]) {
+    return (config as any).appMenu[configTab]
+  }
+  return emptyTab;
+})
+const inited = ref(false)
 async function getTabsFromServer() {
   // check if new tab
-  const route = useRoute();
-
-  let storageTabs = localStorage.getItem('app-tab');
+  if(inited.value) return
+  let storageTabs = localStorage.getItem('docpal-app-tab');
 
   sessionStorage.removeItem('temp-path')
   // storageTabs = null
@@ -33,50 +47,45 @@ async function getTabsFromServer() {
     } else {
       // init a basic layout
       tabAppRef.value?.setHightLightPanel("dummy-tab-container");
-      const config = useRuntimeConfig() as any;
-      const defaultTab = props.defaultTab || config.public.defaultTab
-      defaultTab.parent = "dummy-tab-container";
-
+      const _defaultTab = JSON.parse(JSON.stringify(defaultTab.value))
+      _defaultTab.parent = "dummy-tab-container";
       tabAppRef.value?.setLayout([
         {
           id: "dummy-tab-container",
           parent: "root",
           showingTabIndex: 0,
           size: 100,
-          tabs: [defaultTab],
+          tabs: [_defaultTab],
         },
       ]);
     }
   } catch (error) {
-    const config = useRuntimeConfig() as any;
-    const defaultTab = config.public.defaultTab || {
-      id: "new-tab-001",
-      label: "New Tab",
-      name: "new-tab-001",
-      parent: "dummy-tab-container",
-      component: "LazyTabEmpty",
-    };
+    console.log("error", error)
     tabAppRef.value?.setLayout([
       {
         id: "dummy-tab-container",
         parent: "root",
         showingTabIndex: 0,
         size: 100,
-        tabs: [defaultTab],
+        tabs: [defaultTab.value],
       },
     ]);
     console.log("getTabsFromServer", error);
-  }
-  const router = useRouter();
+  }finally {
 
-  router.push({
-    hash: "",
-    query: {},
-  });
+    inited.value = true;
+    const router = useRouter();
+
+    router.push({
+      hash: "",
+      query: {},
+    });
+  };
+  
 }
 
 function saveHighlightPanel(panelID: string) {
-  localStorage.setItem("app-tab-hightLightPanel", panelID);
+  localStorage.setItem("docpal-tab-hightLightPanel", panelID);
 }
 
 async function saveTabsToLocalStorage(layout: TabPanel[]) {
@@ -87,22 +96,23 @@ async function saveTabsToLocalStorage(layout: TabPanel[]) {
       tab.initized = false;
     });
   });
-  localStorage.setItem(props.mode + '-app-tab', JSON.stringify(saveData));
+  localStorage.setItem('docpal-app-tab', JSON.stringify(saveData));
 }
 const { t } = useI18n();
 
-const { globalSlots } = useGlobalSetting();
+// const { globalSlots } = useGlobalSetting();
 
 </script>
 
 
 <template>
   <TabApp 
+    ref="tabAppRef"
     @ready="getTabsFromServer"
-      @layoutChanged="saveTabsToLocalStorage"
-      @highlightPanelChanged="saveHighlightPanel"
+    @layoutChanged="saveTabsToLocalStorage"
+     @highlightPanelChanged="saveHighlightPanel"
   >
-    <template #sidebar>
+    <!-- <template #sidebar>
         <slot name="sidebar" />
         <component
           v-for="s in globalSlots"
@@ -110,8 +120,8 @@ const { globalSlots } = useGlobalSetting();
           :key="s.name"
           :is="s.component"
           v-bind="$props"
-        />
-      </template>
+        /> 
+      </template>-->
     </TabApp>
     <AppContextmenu />
 </template>

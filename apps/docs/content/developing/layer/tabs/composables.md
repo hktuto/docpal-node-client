@@ -69,7 +69,7 @@ export const useTabsManager = () => {
     layout.value = newLayout
     nextTick(() => {
       // Set focus to stored or first panel
-      hightLightPanel.value = localStorage.getItem('app-tab-hightLightPanel') || newLayout[0]?.id || ''
+      hightLightPanel.value = localStorage.getItem('docpal-tab-hightLightPanel') || newLayout[0]?.id || ''
       
       // Flatten all tabs into components array
       allComponents.value = newLayout.reduce((prev: TabItem[], panel: TabPanel) => {
@@ -528,7 +528,7 @@ watch(layout, (newLayout) => {
 
 // Monitor active panel changes
 watch(hightLightPanel, (newPanel) => {
-  localStorage.setItem('app-tab-hightLightPanel', newPanel)
+  localStorage.setItem('docpal-tab-hightLightPanel', newPanel)
 })
 ```
 
@@ -667,7 +667,7 @@ watch(layout, (newLayout) => {
 
 ```typescript
 // Persist user preferences
-hightLightPanel.value = localStorage.getItem('app-tab-hightLightPanel') || newLayout[0]?.id || ''
+hightLightPanel.value = localStorage.getItem('docpal-tab-hightLightPanel') || newLayout[0]?.id || ''
 ```
 
 ---

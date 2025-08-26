@@ -22,14 +22,18 @@ const displayUserDefineSize = computed(() => {
 
 })
 
-function paneResized(sizes:{min:number, max:number, size:number}[]) {
+type paneResizedParams = {
+    panes:{min:number, max:number, size:number}[]
+}
+function paneResized(sizes:paneResizedParams) {
     /**
      * check if sizes length is greater than 1
      * if so, update userDefineSize
      *
      */
-    if(sizes.length > 1) {
-        const size = sizes[0]?.size ?? 0
+    if(sizes.panes.length > 1) {
+        const panes = sizes.panes
+        const size = panes[0]?.size ?? 0
         const sizeInPixel = window.innerWidth * ( size / 100 )
         userDefineSize.value = sizeInPixel
     }

@@ -6,10 +6,9 @@ export default defineAppConfig({
       label: "adminMenu.User",
       icon: "dp-icon:user",
       hoverIcon: "dp-icon:user",
-      component: "LazyAdminUserList",
+      component: "LazyCompanyUsers",
       feature: "CORE",
       props:{},
-      child:[]
     },
   }
 })

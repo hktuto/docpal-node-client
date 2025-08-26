@@ -77,6 +77,8 @@ const retryAttempts = ref(0)
 const retryProgress = ref(0)
 const autoRetryInterval = ref(null)
 
+const router = useRouter()
+
 // Computed properties
 const formatLastCheck = computed(() => {
   if (!lastHealthCheck.value) return 'Never'
@@ -104,7 +106,7 @@ const handleRetry = async () => {
     
     if (isHealthy) {
       // Server is back online, redirect to home
-      await navigateTo('/')
+      goHome()
     }
   } catch (error) {
     console.error('Retry failed:', error)
@@ -116,7 +118,7 @@ const handleRetry = async () => {
 }
 
 const goHome = () => {
-  navigateTo('/')
+  router.replace('/')
 }
 
 const startAutoRetry = () => {
@@ -125,7 +127,7 @@ const startAutoRetry = () => {
     if (!isRetrying.value) {
       const isHealthy = await refreshServerHealth()
       if (isHealthy) {
-        await navigateTo('/')
+        goHome()
       }
     }
   }, 30000)
@@ -154,7 +156,7 @@ onUnmounted(() => {
 watch(serverHealthy, (isHealthy) => {
   if (isHealthy) {
     // Server is back online, redirect to home
-    navigateTo('/')
+    goHome()
   }
 })
 </script>

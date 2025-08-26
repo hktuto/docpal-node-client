@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends MenuItem">
-const  { userMenu, menuItem } = useAppConfig()
+const  { userMenu, appMenu } = useAppConfig()
 const mode = ref<'collapse' | 'expand'>('collapse')
 const props = defineProps<{
     admin?: boolean
@@ -17,7 +17,7 @@ function generateMenu(){
     let result = []
     
     const _appMenu = deepCopy(userMenu) // menu list
-    const _menu = deepCopy(menuItem) // menu对象映射
+    const _menu = deepCopy(appMenu) // menu对象映射
     
     for(let i = 0; i < _appMenu.length; i++) {
         let item = _appMenu[i];

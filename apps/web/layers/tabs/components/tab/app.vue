@@ -147,8 +147,9 @@ async function openInCurrentTab(tab:TabItem){
     // const existingTab = allComponents.value.find(item => item.name === tab.name)
 }
 
-function setLayout(layout:TabPanel[]){
+function setLayout(layout:any[]){
     loading.value = true;
+    // console.log("setLayout", layout)
     initLayout(layout);
     loading.value = false
 
@@ -210,10 +211,15 @@ defineExpose({
         <template #sidebar>
             <AppMenu class="sideMenu" :admin="appPlatform === 'admin'">
                 <template #header>
+                    <div class="logo">
+                        <img src="/logo.png" alt="logo">
+                    </div>
+                </template>
+                <template #footer>
+
                     <AuthUser />
                     <AuthSetting />
                 </template>
-                <template #footer> </template>
             </AppMenu>
             
         </template>
@@ -236,56 +242,18 @@ defineExpose({
             </template>
         </template>
     </TabWrapper>
-    <TabPastePathDialog ref="PasteDialogRef"  @openInNewTab="(data:any) => openTab(data, true)" />
+    <!-- <TabPastePathDialog ref="PasteDialogRef"  @openInNewTab="(data:any) => openTab(data, true)" /> -->
 </template>
 
 
 <style lang="scss" scoped>
-.fullScreenContainer{
-    position: absolute;
-    left:0;
-    top:0;
-    width: 100%;
-    height: 100%;
-    background: var(--app-grey-975);
-    z-index: 1000;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-flow: column nowrap;
-    z-index: 4;
-    border-radius: var(--app-border-radius-m);
-    overflow: hidden;
-    .header{
-        width: 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        overflow: auto;
-        overflow-y:hidden ;
-        isolation: isolate;
-        position: relative;
-        // background: var(--app-grey-900);
-        justify-content: flex-start;
-        align-items: center;
-        padding-block: var(--app-space-xs);
-        &:after {
-            content: '';
-            height: 1px;
-            background: var(--app-grey-850);
-            width:100%;
-            display: block;
-            z-index: -1;
-            position: absolute;
-            left: 0;
-            bottom: 0;
-        }
-    }
-    .fullscreenContent{
-        width: 100%;
+.logo{
+    height: 40px;
+    position: relative;
+    img{
         height: 100%;
-        position: relative;
-        overflow: hidden;
-        background: var(--app-grey-1000);
+        width: auto;
     }
 }
+
 </style>

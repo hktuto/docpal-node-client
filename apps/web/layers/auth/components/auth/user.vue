@@ -54,7 +54,7 @@ function handleOpenUpload(show: boolean = false, action: 'upload' | 'ai' | '' = 
     <div class="userMenuWidgetContainer">
         <AppLogo />
         <div v-if="user" class="username">
-            {{ user.username }}
+            {{ user.name }}
         </div>
         <div class="actions">
             <!-- TODO: upgrade UploadStructureButton to use new upload structure -->
@@ -93,7 +93,9 @@ function handleOpenUpload(show: boolean = false, action: 'upload' | 'ai' | '' = 
     align-items: center;
     gap: var(--app-space-s);
     line-height: 1;
-    padding-right: var(--app-space-xs);
+    padding-inline: var(--app-space-xs);
+    padding-block: var(--app-space-s);
+    border-top: 1px solid var(--app-grey-800);
 
 }
 .dropdownIcon{

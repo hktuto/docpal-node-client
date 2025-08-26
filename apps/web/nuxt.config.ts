@@ -1,13 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 import { defineNuxtConfig } from 'nuxt/config'
 import dotenv from 'dotenv'
 dotenv.config({
   path: '../../.env'
 })
+const currentDir = dirname(fileURLToPath(import.meta.url))
 
 
 export default defineNuxtConfig({
+  compatibilityDate: '2025-08-24',
+  
+  ssr: false,
   devtools: {
     enabled: true,
     timeline: {
@@ -15,10 +21,9 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/styles/main.scss'],
-  compatibilityDate: '2025-08-24',
-  ssr: false,
+  
   modules: ['@nuxtjs/i18n', '@nuxtjs/color-mode', '@nuxt/icon'],
-  debug : process.env.NODE_ENV === 'development',
+  // debug : process.env.NODE_ENV === 'development',
   i18n: {
     defaultLocale:'en-US',
     langDir:'locales',
@@ -52,6 +57,19 @@ export default defineNuxtConfig({
     preference: 'light',
     fallback: 'light',
     classSuffix: ''
+  },
+  icon:{
+    customCollections:[
+      {
+        prefix:'dp-icon',
+        dir: join(currentDir, './app/assets/dp-icons')
+      }
+    ],
+    clientBundle:{
+      scan: true,
+      includeCustomCollections: true, 
+    },
+    
   },
   vite: {
     css: {

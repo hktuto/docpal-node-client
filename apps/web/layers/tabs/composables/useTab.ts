@@ -20,7 +20,7 @@ export const useTabsManager = () => {
         
         layout.value = newLayout
         nextTick(() => {
-            hightLightPanel.value = localStorage.getItem('app-tab-hightLightPanel') || newLayout[0]?.id || ''
+            hightLightPanel.value = localStorage.getItem('docpal-tab-hightLightPanel') || newLayout[0]?.id || ''
             allComponents.value = newLayout.reduce((prev:TabItem[], panel:TabPanel) => {
                 return prev.concat(panel.tabs)
                 }, [])
@@ -60,9 +60,12 @@ export function panelTabFocus(panelId:string, tabIndex: number) {
     }
 }
 
-export function paneResized(sizes:{min:number, max:number, size:number}[]) {
+type paneResizedParams = {
+    panes:{min:number, max:number, size:number}[]
+}
+export function paneResized(sizes:paneResizedParams) {
     const layout = useTabLayout()
-    sizes.forEach((size, index) => {
+    sizes.panes.forEach((size, index) => {
         if(layout.value[index]) {
             layout.value[index].size = size.size
         }
