@@ -9,7 +9,11 @@
     "prepare": "nuxt prepare",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.4",
@@ -33,10 +37,16 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/test-utils": "^3.19.2",
     "@types/mime-types": "^3.0.1",
     "@types/splitpanes": "^2.2.6",
+    "@vitest/ui": "^3.2.4",
+    "@vue/test-utils": "^2.4.6",
     "api": "workspace:*",
     "dotenv": "^16.6.1",
-    "sass": "^1.90.0"
+    "happy-dom": "^18.0.1",
+    "jsdom": "^26.1.0",
+    "sass": "^1.90.0",
+    "vitest": "^3.2.4"
   }
 }
