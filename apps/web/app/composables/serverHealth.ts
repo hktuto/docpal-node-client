@@ -28,7 +28,7 @@ export async function checkServerHealth(): Promise<boolean> {
     
     // Race between the API call and timeout
     const healthResponse = await Promise.race([
-      apiClient.health.getHealth(),
+      apiClient.health.get(),
       timeoutPromise
     ]) as any
     

@@ -4,83 +4,11 @@ export default defineAppConfig({
       name: "client-work-panel"
     },
     {
-      name: "client-browse"
+      name: 'admin-user'
     },
     {
-      name: "client-search"
+      name: 'admin-master-table'
     },
-    {
-      label: "file_uploads",
-      icon: "uil:upload",
-      children: [
-        {
-          name: "client-ai-upload"
-        },
-        {
-          name: "client-fileRequest"
-        }
-      ]
-    },
-    {
-      label: "file_share_module",
-      icon: "meteor-icons:share",
-      children: [
-        {
-          name: "client-share"
-        },
-        {
-          name: "client-share-me"
-        },
-        {
-          name: "client-share-other"
-        }
-      ]
-    },
-    {
-      name: "client-collections"
-    },
-    // {
-    //     name: "client-smartFolder"
-    // },
-    {
-      name: "client-folder-cabinet"
-    },
-    {
-      name: "client-workflow"
-    },
-    {
-      label: "retention_policies",
-      icon: "ic:outline-lock-clock",
-      children: [
-        {
-          name: "client-retention"
-        },
-        {
-          name: "client-holdPolicies"
-        }
-      ]
-    },
-    {
-      name: "client-dashboard"
-    },
-    {
-      name: "client-master-table"
-    },
-    {
-      name: "client-trash"
-    },
-    {
-      name: "client-case-manage"
-    },
-    {
-      name: "client-easy-form"
-    },
-    {
-      name :"user-role-file-action"
-    },
-    {
-      name: "RBAC-client-page"
-    }
   ],
   defaultTab:"client-work-panel"
 })

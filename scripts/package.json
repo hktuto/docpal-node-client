@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "name": "docpal-scripts",
+  "version": "1.0.0",
+  "description": "Development scripts for Docpal project"
+}

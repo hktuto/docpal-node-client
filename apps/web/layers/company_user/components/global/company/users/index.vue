@@ -1,4 +1,10 @@
 <template>
-  company user setting
+  <AppPageContainer>
+    user setting
+  </AppPageContainer>
 </template>
+
+<script lang="ts" setup>
+
+</script>
 

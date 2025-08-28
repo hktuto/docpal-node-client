@@ -69,18 +69,21 @@ async function generate(){
                             },
                             onFormatRouteName: (routeInfo, templateRouteName) => {
                                 // console.log(routeInfo);
-                                const paths = routeInfo.route.replace('/api/','').split('/');
+                                let paths = routeInfo.route.replace('/api/','').split('/');
                                 if(paths[paths.length -1] === '') {
                                     paths[paths.length -1] = 'deprecate'
                                 }
                                 const ignoreList = ['api', 'docpal'];
+                                // remove first item in path
                                 const allPath = paths.reduce((all, curr, index) => {
                                     if(ignoreList.includes(curr)) return all
                                     // if curr contain "${}", replace it
                                     if(curr.includes('${')) {
                                         const newPath = curr.replace('${', '').replace('}', '')
                                     }
-                                    all.push(curr)
+                                    if(curr !== routeInfo.moduleName){
+                                        all.push(curr)
+                                    }
                                     return all
                                 },[])
                                

@@ -8,7 +8,12 @@
     "dev": "pnpm -F web run dev",
     "web:build": "pnpm -F web run build",
     "web:generate": "pnpm -F web run generate",
-    "web:preview": "pnpm -F web run preview"
+    "web:preview": "pnpm -F web run preview",
+    "create:layer": "node scripts/create-layer.js",
+    "layer:create": "node scripts/create-layer.js",
+    "manage:layers": "node scripts/manage-layers.js",
+    "layers:list": "node scripts/manage-layers.js list",
+    "layers:analyze": "node scripts/manage-layers.js analyze"
   },
   "keywords": [],
   "author": "",

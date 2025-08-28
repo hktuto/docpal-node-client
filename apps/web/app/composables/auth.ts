@@ -16,7 +16,7 @@ export async function getMe() {
   }
   
   try {
-    const response = await apiClient.auth.getAuthSession()
+    const response = await apiClient.auth.getSession()
     
     if (response.success) {
       isAuthenticated.value = true
@@ -52,7 +52,7 @@ export async function loginApi(email: string, password: string) {
   const authInit = useAuthInit()
   
   try {
-    const response = await apiClient.auth.postAuthLogin({
+    const response = await apiClient.auth.postLogin({
       email,
       password
     })
@@ -98,7 +98,7 @@ export async function logout(reason: 'manual' | 'timeout' | 'force' | 'token_exp
   }
   
   try {
-    await apiClient.auth.postAuthLogout()
+    await apiClient.auth.postLogout()
   } catch(error) {
     console.error(error);
   } finally {
